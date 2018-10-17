@@ -1,0 +1,12 @@
+nav{
+    height: 75px;
+    background: rgb(1, 17, 93);
+    color: white;
+    text-transform: uppercase;
+}
+
+.logo{
+    padding-top: 22px;
+    margin-left: 25px;
+    font-size: 25px;
+}

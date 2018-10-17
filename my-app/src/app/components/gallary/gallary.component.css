@@ -1,0 +1,43 @@
+.container{
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 25px;
+    position: relative;
+}
+
+.mainTitle{
+    font-size: 25px;
+}
+
+.collectionsContainer{
+    position: absolute;
+    display: inline-block;
+    margin-top: 100px;
+    width: 40%;
+    top: 0;
+
+}
+
+.collectionsTitle{
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.collection{
+    cursor: pointer;
+    display: block;
+    margin: 12.5px 0;
+}
+
+.imageContainer{
+    position: relative;
+    display: inline-block;
+    margin-top: 50px;
+    margin-left: 40%;
+    width: 60%;
+
+}
+
+.displayedImg{
+    max-width: 100%;
+}

@@ -1,0 +1,17 @@
+footer{
+    height: 75px;
+    text-transform: uppercase;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    z-index: 1;
+}
+
+.footerItem{
+    position: relative;
+    display: inline-block;
+    font-size: 15px;
+    padding-top: 23px;
+    text-align: center;
+    cursor: pointer;
+}
