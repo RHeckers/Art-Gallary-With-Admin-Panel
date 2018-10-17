@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ArtCollection } from '../../models/ArtCollection';
+
 @Component({
   selector: 'app-gallary',
   templateUrl: './gallary.component.html',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GallaryComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+
+   }
 
   ngOnInit() {
   }
