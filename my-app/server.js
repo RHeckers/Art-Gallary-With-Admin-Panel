@@ -35,9 +35,16 @@ const onError = error => {
     }
 }
 
-const port = process.env.PORT || 3000
+const onListening = () => {
+    const addr = server.address();
+    const bind = typeof addr === "string" ? "pipe " + addr : "port " + port;
+    debug("Listen on " + bind);
+}
 
+const port = normalizePort(process.env.PORT || 3000)
 app.set('port', port);
-const server = http.createServer(app);
 
+const server = http.createServer(app);
+server.on("error", onError);
+server.on("listening", onListening);
 server.listen(port);
