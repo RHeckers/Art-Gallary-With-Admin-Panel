@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Imported models
@@ -14,11 +15,19 @@ export class ArtCollectionService {
 
   artCollections: Array<ArtCollection>;
   artCollection: ArtCollection;
+  private updatedCollections = new Subject<Array<ArtCollection>>();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getArtCollections (): Observable<Array<ArtCollection>> {
-    return ;
+    this.http.get<Array<ArtCollection>>('http://localhost:3000/api/artCollections')
+      .subscribe((artCollectionsData) => {
+        this.artCollections = artCollectionsData;
+        this.updatedCollections.next([...this.artCollections]);
+
+      })
+
+      return this.updatedCollections;
   }
 
   getArtCollection (): Observable<ArtCollection> {

@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+
 
 //Imported custom modules
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +25,8 @@ import { ArtCollectionService } from './services/art-collection.service';
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ], 
   providers: [ArtCollectionService],
   bootstrap: [AppComponent]

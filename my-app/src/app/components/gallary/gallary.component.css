@@ -23,11 +23,25 @@
     font-size: 18px;
 }
 
-.collection{
-    cursor: pointer;
+/* Uses prefix for ASYNC classes*/
+:host ::ng-deep .collection{
     display: block;
-    margin: 12.5px 0;
+    font-size: 15px;
+    margin: 12.5px 0px;
+    cursor: pointer;
 }
+:host ::ng-deep .collection:hover{
+    font-size: 16px;
+}
+
+:host ::ng-deep .activeCollection{
+    color: blue;
+}
+
+.activeCollection{
+    color: blue;
+}
+
 
 .imageContainer{
     position: relative;
