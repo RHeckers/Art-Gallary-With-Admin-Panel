@@ -1,5 +1,6 @@
 const http = require('http');
 const app = require('./backend/app');
+const debug = require('debug')("node-angular");
 
 const normalizePort = val => {
     let port = parseInt(val, 10);
@@ -27,7 +28,7 @@ const onError = error => {
             process.exit(1);
             break;
         case "EADDRINUSE":
-            console.error(bind + " ris already in use");
+            console.error(bind + " is already in use");
             process.exit(1);
             break;
         default:
@@ -38,7 +39,7 @@ const onError = error => {
 const onListening = () => {
     const addr = server.address();
     const bind = typeof addr === "string" ? "pipe " + addr : "port " + port;
-    debug("Listen on " + bind);
+    // debug("Listening on " + bind);
 }
 
 const port = normalizePort(process.env.PORT || 3000)
