@@ -13,7 +13,7 @@ import { ArtCollection } from './../models/ArtCollection';
 })
 export class ArtCollectionService {
 
-  private artCollections: Array<ArtCollection>;
+  private artCollections: Array<ArtCollection> = [];
   private artCollection: ArtCollection;
   private updatedCollections = new Subject<Array<ArtCollection>>();
 
@@ -43,12 +43,19 @@ export class ArtCollectionService {
     return;
   }
 
-  addArtCollection(title: string, art: Array<string>){
-    const collectionToAdd: ArtCollection = {id: null, title: title, artCollection: art };
-    this.http.post<{msg: string}>('http://localhost:3000/api/artCollections', collectionToAdd)
+  addArtCollection(title: string, art: Array<any>){
+    const artCollectionData = new FormData();
+    artCollectionData.append("title", title);  
+    for(let i = 0; i < art.length; i++){
+        artCollectionData.append("images", art[i]);
+    }
+      
+    this.http.post<ArtCollection>('http://localhost:3000/api/artCollection', artCollectionData)
     .subscribe((res) => {
-      console.log(res.msg);
-      this.artCollections.push(collectionToAdd);
+        console.log(res)
+      const newCollection = {id: res.id, title: title, artCollection: res.artCollection}
+      console.log(newCollection);
+      this.artCollections.push(newCollection);
       this.updatedCollections.next([...this.artCollections]);
     })
     

@@ -23,6 +23,7 @@
       class="fileInput" 
       id="imgInput" 
       type="file"
+      multiple
       (change)="uploadImg($event)">
       
   </div>
@@ -39,7 +40,7 @@
       <img *ngFor="let image of imagePreviews" [src]="image" class="previewImg" alt="">
     </div>
     
-    <button class="imgInputBtn addCollectionBtn" (click)="addCollection">Add Collection</button> 
+    <button class="imgInputBtn addCollectionBtn" (click)="addCollection()">Add Collection</button> 
 
 
   </div>
