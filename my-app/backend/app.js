@@ -1,6 +1,41 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const mongoose = require('mongoose');
+
+const ArtCollection = require('./models/artCollection');
 
 const app = express();
+
+mongoose.connect('mongodb+srv://rheckers:B83bWrT4DII2I1q0@cluster0-uidwd.mongodb.net/art-gallary?retryWrites=true', { useNewUrlParser: true })
+ .then(() => {
+     console.log('Connected to database!')
+ })
+ .catch(() => {
+     console.log('Connection to database failed')
+ });
+
+const MIME_TYPE_MAP = {
+    'image/png': 'png',
+    'image/jpg': 'jpg',
+    'image/jpeg': 'jpg',
+}
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const isValid = MIME_TYPE_MAP[file.mimetype];
+        let error = new Error('Inlavid image type');
+        if(isValid){
+            error = null;
+        }
+        cd(error, "backend/images");
+    },
+    filename: (req, file, cd) => {
+        const name = file.originalname.toLowerCase().split(' ').join('-');
+        const extention = MIME_TYPE_MAP[file.mimetype];
+        cb(null, name + '-' + Date.now() + '.' + extention);
+    }
+});
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -9,9 +44,28 @@ app.use((req, res, next) => {
         "Origin, X-Requested-Width, Content-Type, Accept");
     res.setHeader("Access-Control-Allow-Methodes", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
     next();
-})
+});
 
-app.use('/api/artCollections',(req, res, next) => {
+app.use(bodyParser.json());
+
+app.post('/api/artCollection', (res, req, next) => {
+    const artcollection = new ArtCollection({
+        title: req.body.title,
+        artCollection: req.body.artCollection
+    });
+    console.log(artcollection);
+    artcollection.save();
+    res.status(201).json({ msg: 'Art collection successfully added'});
+});
+
+app.get('/api/artCollections', multer({storage: fileStorage}).array("image"),(req, res, next) => {
+    // ArtCollection.find()
+    //   .then(collections => {
+    //       console.log(123);
+
+    //       res.status(200).json(collections);
+    //   });
+    
     const artCollections = [
         {
             id: "denv23rfjkead", 

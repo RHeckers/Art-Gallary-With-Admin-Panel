@@ -1,0 +1,96 @@
+.editBtn{
+    background-image: linear-gradient(to right, rgb(1, 19, 37), rgb(120, 19, 37), rgb(185, 19, 37), rgb(200, 19, 37), rgb(1, 19, 37));
+    
+}
+
+.addBtn{
+    background-image: linear-gradient(to right, rgb(200, 19, 37), rgb(1, 19, 37), rgb(200, 19, 37), rgb(1, 19, 37));
+
+}
+
+.btn{
+  width: 35%;
+  height: 130px;
+  margin-left: 7.5%;
+  margin-right: 7.5%;
+  border: none;
+  border-radius: 30px;
+  font-size: 2.5rem;
+  font-weight: 800;  
+  padding-bottom: 3px;
+  color: white;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+  background-size: 300% 100%;
+  
+}
+
+.btn:hover{
+    cursor: pointer;
+    background-position: 100% 0;
+  }
+
+  .loginFormText{
+    text-align: center;
+    width: 70%;
+    font-size: 2.5rem;
+    margin-left: 15%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.loginForm{
+    width: 100%;
+
+}
+
+.loginInput{
+    width: 50%;
+    height: 2.5rem;
+    font-size: 2rem;
+    margin: 10px 24%;
+    padding-left: 1%
+}
+
+.loginBtn{
+      background:rgb(42, 60, 76);
+      color:#fff;
+      border:none;
+      margin-top: 20px;
+      position: relative;
+      height:40px;
+      font-weight: 600;
+      font-size: 1.5rem;
+      width: 15%;
+      cursor:pointer;
+      transition:800ms ease all;
+      outline:none;
+      border-radius: 2px;
+      margin-left: 42.5%;
+    }
+    .loginBtn:hover{
+      background:rgb(227, 234, 241);
+      color:rgb(42, 60, 76);
+    }
+    .loginBtn:before,.loginBtn:after{
+      content:'';
+      position:absolute;
+      top:0;
+      right:0;
+      height:2px;
+      width:0;
+      background: rgb(42, 60, 76);
+      transition:400ms ease all;
+    }
+    .loginBtn:after{
+      right:inherit;
+      top:inherit;
+      left:0;
+      bottom:0;
+    }
+    .loginBtn:hover:before,.loginBtn:hover:after{
+      width:100%;
+      transition:800ms ease all;
+    }

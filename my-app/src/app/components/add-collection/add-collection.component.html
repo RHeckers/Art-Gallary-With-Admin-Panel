@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="titleHolder">
+    <h1 class="pageTitle">Add a new art collection</h1>
+  </div>
+
+  <p class="label">Enter a title:</p>
+  <input
+   #inputCollectionTitle
+   [(ngModel)]="collectionTitle" 
+   class="titleInput" 
+   name="titleInput" type="text" 
+   placeholder="Enter a title for the art collection">
+  
+  <div class="fileInputDiv">
+    <p class="label">Upload images:</p>
+    <button 
+      class="imgInputBtn" 
+      (click)="filePicker.click()"
+      >Click To Add Images</button> 
+
+    <input 
+      #filePicker
+      class="fileInput" 
+      id="imgInput" 
+      type="file"
+      (change)="uploadImg($event)">
+      
+  </div>
+
+  <div class="previewCollection">
+    <div class="titleHolder">
+      <h2 class="previewHeader">Preview:</h2>
+    </div>
+
+    <h3 class="label">Preview Titlte: <p class="bold-uppercase-inline">{{collectionTitle}}</p></h3>
+
+    <p class="label">Images added:</p>
+    <div class="previewImages" >
+      <img *ngFor="let image of imagePreviews" [src]="image" class="previewImg" alt="">
+    </div>
+    
+    <button class="imgInputBtn addCollectionBtn" (click)="addCollection">Add Collection</button> 
+
+
+  </div>
+</div>

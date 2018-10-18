@@ -1,0 +1,77 @@
+.fileInput{
+    visibility: hidden;
+}
+
+.titleInput{
+    width: 80%;
+    margin-left: 10%;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+.titleHolder{
+    text-align: center;
+}
+
+.pageTitle{
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.label{
+    margin-left: 10%;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+.previewHeader{
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.previewImages{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.addCollectionBtn{
+   margin-bottom: 25px;
+}
+
+.imgInputBtn{
+    width: calc(80% + 9px);
+    height: 40px;
+    margin-left: 10%;
+    /* margin-top: 25px; */
+    font-size: 20px;
+    padding-left: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    color: white;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, rgb(1, 19, 37), rgb(120, 19, 37), rgb(185, 19, 37), rgb(200, 19, 37), rgb(1, 19, 37));
+
+
+}
+.imgInputBtn:hover{
+    background-position: 100% 0;
+}
+
+.previewImages{
+    overflow: auto;
+}
+
+.previewImg{
+    max-height: 180px;
+    margin: 5px;
+}
