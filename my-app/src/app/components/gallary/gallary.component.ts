@@ -30,35 +30,37 @@ export class GallaryComponent implements OnInit {
 
   ngOnInit() {
     this.automatedSlides = true;
-    this.delay = 5;
+    this.delay = 7;
+    this.imgIndex = 0;
     this.collectionsHolder = document.getElementById('collections');
     this.displayedImg = document.getElementById('displayedImg');
     this.displayedImg.style.height = window.innerHeight / 2 + 'px';
     this.getArtCollections();
-    this.imgIndex = 0;
+    
   }
 
   getArtCollections(): void {
     this.artCollectionService.getArtCollections()
       .subscribe(artCollections => {
         this.artCollections = artCollections
-        console.log(artCollections, this.artCollections);
         this.slideShow('firstRun');
       });   
   }
 
 
   slideShow(e): void {
+    this.imgIndex = 0;
     if(e === 'firstRun'){
       this.collectionToUse = this.artCollections[0].artCollection;
       this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex]);
-    }else if(e === Event){
+    }else if(e.target){
       const clickedId = e.target.attributes['id'].value;
       const idTextLength = clickedId.length - 1;
       const index = parseInt(clickedId.charAt(idTextLength));
       this.collectionToUse = this.artCollections[index].artCollection;
       this.activeImg = this.collectionToUse[this.imgIndex];
     }
+    
 
     const nextImg = () => {
       if(this.imgIndex < this.collectionToUse.length - 1){
@@ -66,7 +68,7 @@ export class GallaryComponent implements OnInit {
       }else{
         this.imgIndex = 0;
       }
-      TweenMax.to(this.displayedImg, 1, {delay: 0.8, opacity: 1, onComplete: startAnimation});
+      TweenMax.to(this.displayedImg, 0.5, {delay: 0.8, opacity: 1, onComplete: startAnimation});
       setTimeout(() => {
         this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex])
       }, 720);
