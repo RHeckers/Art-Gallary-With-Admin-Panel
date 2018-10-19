@@ -39,9 +39,11 @@
 .imageContainer{
     position: relative;
     display: inline-block;
+    align-content: center;
     margin-top: 50px;
     margin-left: 40%;
     width: 60%;
+    text-align: center;
 
 }
 

@@ -3,14 +3,16 @@
 
   <div class="collectionsContainer">
     <h2 class="collectionsTitle">Kunst collecties:</h2>
-    <div class="collections" id="collections">
-      
+    <div *ngFor="let collection of artCollections" class="collections" id="collections">
+      <p class="collection" (click)="slideShow($event)">{{collection.title}}</p>
     </div>
     
   </div>
 
   <div class="imageContainer">
-      <img class="displayedImg" id="displayedImg" src="http://samanthavanrijs.nl/wp-content/uploads/2017/01/test.png" alt="">
+    <p>
+        <img class="displayedImg" id="displayedImg" [src]="activeImg" alt="">
+    </p>
   </div>
 
 </div> 
