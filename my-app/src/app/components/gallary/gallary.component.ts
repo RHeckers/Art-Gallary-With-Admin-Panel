@@ -33,7 +33,7 @@ export class GallaryComponent implements OnInit {
     this.delay = 5;
     this.collectionsHolder = document.getElementById('collections');
     this.displayedImg = document.getElementById('displayedImg');
-    this.displayedImg.style.maxHeight = window.innerHeight / 2 + 'px';
+    this.displayedImg.style.height = window.innerHeight / 2 + 'px';
     this.getArtCollections();
     this.imgIndex = 0;
   }
@@ -51,7 +51,6 @@ export class GallaryComponent implements OnInit {
   slideShow(e): void {
     if(e === 'firstRun'){
       this.collectionToUse = this.artCollections[0].artCollection;
-      console.log(123)
       this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex]);
     }else if(e === Event){
       const clickedId = e.target.attributes['id'].value;
