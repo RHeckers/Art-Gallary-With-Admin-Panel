@@ -21,17 +21,22 @@ export class GallaryComponent implements OnInit {
   displayedImg: HTMLElement;
   collectionsHolder: HTMLElement;
   artCollections: Array<ArtCollection>;
+  automatedSlides: Boolean;
+  delay: number;
+  collectionToUse: Array<string> = [];
+  imgIndex: number;
 
   constructor(private artCollectionService: ArtCollectionService) {}
 
   ngOnInit() {
+    this.automatedSlides = true;
+    this.delay = 5;
     this.collectionsHolder = document.getElementById('collections');
     this.displayedImg = document.getElementById('displayedImg');
     this.displayedImg.style.maxHeight = window.innerHeight / 2 + 'px';
     this.getArtCollections();
-
+    this.imgIndex = 0;
   }
-
 
   getArtCollections(): void {
     this.artCollectionService.getArtCollections()
@@ -43,39 +48,59 @@ export class GallaryComponent implements OnInit {
   }
 
 
-  slideShow(e){
-    let collectionToUse;
-    let imgIndex = 0;
+  slideShow(e): void {
     if(e === 'firstRun'){
-      collectionToUse = this.artCollections[0].artCollection;
-      this.activeImg = collectionToUse[imgIndex];
-    }else{
+      this.collectionToUse = this.artCollections[0].artCollection;
+      console.log(123)
+      this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex]);
+    }else if(e === Event){
       const clickedId = e.target.attributes['id'].value;
       const idTextLength = clickedId.length - 1;
       const index = parseInt(clickedId.charAt(idTextLength));
-      collectionToUse = this.artCollections[index].artCollection;
-      this.activeImg = collectionToUse[imgIndex];
+      this.collectionToUse = this.artCollections[index].artCollection;
+      this.activeImg = this.collectionToUse[this.imgIndex];
     }
 
     const nextImg = () => {
-      if(imgIndex < collectionToUse.length - 1){
-        imgIndex++;
+      if(this.imgIndex < this.collectionToUse.length - 1){
+        this.imgIndex++;
       }else{
-        imgIndex = 0;
+        this.imgIndex = 0;
       }
       TweenMax.to(this.displayedImg, 1, {delay: 0.8, opacity: 1, onComplete: startAnimation});
       setTimeout(() => {
-        this.displayedImg.setAttribute('src', collectionToUse[imgIndex])
+        this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex])
       }, 720);
       
     }
     
     const startAnimation = () => {
-      TweenMax.to(this.displayedImg, 1, {delay: 5, opacity: 0, onStart: nextImg});      
+      if(this.automatedSlides){
+        TweenMax.to(this.displayedImg, 1, {delay: this.delay, opacity: 0, onStart: nextImg});  
+      }
     }
 
     startAnimation()
 
+  }
+
+  getInputValue(e): void{
+    switch (e.target.id) {
+      case "automatedCheckbox":
+        const value = e.target.checked;     
+        this.automatedSlides = value;
+        if(value === true){ 
+          this.slideShow('restart');          
+        }
+        break;
+    
+      case "delayInput":
+        this.delay = e.target.value
+        break;
+
+      default:
+        break;
+    }
   }
 
   

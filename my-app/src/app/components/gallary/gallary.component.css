@@ -50,3 +50,43 @@
 .displayedImg{
     max-width: 100%;
 }
+
+.arrow{
+    max-width: 30px;
+    margin: 10px 150px;
+    margin-top: 20px;
+    cursor: pointer;
+    
+}
+
+.arrow:hover{
+    transform: scale(1.1);
+}
+
+.speedLabel{
+    position: absolute;
+    margin-top: 18px;
+    margin-left: 30px;
+}
+
+.speedInput{
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.automatedLabel{
+    position: absolute;
+    margin-top: 25px;
+    margin-left: -120px;
+}
+
+.automatedInput{
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    text-align: center;
+    font-weight: bold;
+}

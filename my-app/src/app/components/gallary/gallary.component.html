@@ -10,9 +10,43 @@
   </div>
 
   <div class="imageContainer">
-    <p>
-        <img class="displayedImg" id="displayedImg" [src]="activeImg" alt="">
-    </p>
+    <div>
+      <img 
+        class="displayedImg" 
+        id="displayedImg" 
+        [src]="activeImg" 
+        alt="">
+      <div class="controlles">
+        <img 
+          class="arrow arrowLeft" 
+          src="http://localhost:3000/images/585e47accb11b227491c338a.png" 
+          alt="">
+        <label 
+          class="automatedLabel" 
+          for="automated">Automated: 
+            <input class="automatedInput" 
+            name="automated" 
+            checked 
+            id="automatedCheckbox"
+            type="checkbox"
+            (change)="getInputValue($event)">
+        </label>
+        <label 
+          class="speedLabel" 
+          for="speed">Delay: 
+            <input 
+            class="speedInput" 
+            name="speed" 
+            type="text"
+            id="delayInput"
+            (change)="getInputValue($event)">
+        </label> 
+        <img 
+          class="arrow arrowRight" 
+          src="http://localhost:3000/images/585e47b5cb11b227491c338b.png" 
+          alt="">        
+      </div>
+    </div>
   </div>
 
 </div> 
