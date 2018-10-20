@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ArtCollectionService } from '../../services/art-collection.service';
+import { ArtCollection } from '../../models/ArtCollection';
 
 @Component({
   selector: 'app-edit-collection',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditCollectionComponent implements OnInit {
 
-  constructor() { }
+  artCollections: Array<ArtCollection>;
+
+  constructor(private artCollectionService: ArtCollectionService) { }
 
   ngOnInit() {
+    this.getArtCollections();
+  }
+
+  getArtCollections(): void {
+    this.artCollectionService.getArtCollections()
+      .subscribe(artCollections => {
+        this.artCollections = artCollections
+        console.log(this.artCollections);
+      });
   }
 
 }

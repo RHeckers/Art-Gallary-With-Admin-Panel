@@ -35,9 +35,14 @@
 
     <h3 class="label">Preview Titlte: <p class="bold-uppercase-inline">{{collectionTitle}}</p></h3>
 
-    <p class="label">Images added:</p>
-    <div class="previewImages" >
-      <img *ngFor="let image of imagePreviews" [src]="image" class="previewImg" alt="">
+    <p class="label">Images preview  (drag & drop to change order):</p>
+    <div class="previewImages"id="previewImages">
+      <img 
+        *ngFor="let image of imagePreviews" 
+        [src]="image" 
+        (dragend)="swapImg($event)"
+        class="previewImg" 
+        alt=""> 
     </div>
     
     <button class="imgInputBtn addCollectionBtn" (click)="addCollection()">Add Collection</button> 

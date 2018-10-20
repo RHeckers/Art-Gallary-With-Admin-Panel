@@ -55,6 +55,7 @@ export class GallaryComponent implements OnInit {
       this.collectionToUse = this.artCollections[0].artCollection;
       this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex]);
     }else if(e.target){
+      TweenMax.killAll();
       const clickedId = e.target.attributes['id'].value;
       const idTextLength = clickedId.length - 1;
       const index = parseInt(clickedId.charAt(idTextLength));

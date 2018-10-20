@@ -56,7 +56,7 @@ app.post('/api/artCollection', multer({storage: fileStorage}).array("images"), (
     const url = req.protocol + "://" + req.get("host");
     const imgPaths = []
     for(let i = 0; i < req.files.length; i++){
-        imgPaths.unshift(url + "/images/" + req.files[i].filename);
+        imgPaths.push(url + "/images/" + req.files[i].filename);
     }
     const artcollection = new ArtCollection({
         title: req.body.title,
@@ -76,6 +76,14 @@ app.get('/api/artCollections',(req, res, next) => {
     ArtCollection.find()
       .then(collections => {
           res.status(200).json(collections);
+      });
+});
+
+app.delete('/api/artCollections/:id', (req, res, next) => {
+    ArtCollection.deleteOne({_id: req.params.id})
+      .then(result => {
+        console.log(result);
+        res.status(200).json({msg: "Post deleted!"})
       });
 });
 
