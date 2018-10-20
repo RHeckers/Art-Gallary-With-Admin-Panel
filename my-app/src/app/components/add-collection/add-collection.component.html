@@ -37,12 +37,15 @@
 
     <p class="label">Images preview  (drag & drop to change order):</p>
     <div class="previewImages"id="previewImages">
-      <img 
-        *ngFor="let image of imagePreviews" 
-        [src]="image" 
-        (dragend)="swapImg($event)"
-        class="previewImg" 
-        alt=""> 
+      <div *ngFor="let image of imagePreviews; let i = index" class="imgHolder">
+          <img  
+          [src]="image" 
+          (dragend)="swapImg($event)"
+          class="previewImg" 
+          alt=""> 
+          <p class="removeImg" [attr.data-index]="i" (click)="removeImg($event)">X</p>
+      </div>
+      
     </div>
     
     <button class="imgInputBtn addCollectionBtn" (click)="addCollection()">Add Collection</button> 

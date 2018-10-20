@@ -84,3 +84,18 @@
     margin-top: 25px;
     margin-bottom: 25px;
 }
+
+.removeImg{
+    position: absolute;
+    margin-top: -182px;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+.removeImg:hover{
+    transform: scale(1.05)
+}
+
+.imgHolder{
+    display: inline-block;
+}

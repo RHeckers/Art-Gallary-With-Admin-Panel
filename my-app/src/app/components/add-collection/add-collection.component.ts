@@ -14,6 +14,7 @@ export class AddCollectionComponent implements OnInit {
   imgHolder: HTMLElement;
   imgInput: HTMLElement;
   images: NodeList;
+  holders: NodeList;
   imagePreviews: Array<any> = [];
   previewFiles: Array<File> = [];
   imgSwap: ImageSwapComponent;
@@ -34,6 +35,7 @@ export class AddCollectionComponent implements OnInit {
 
   uploadImg(e){
     const uploadedImges = e.target.files;
+    console.log(uploadedImges)
   
     for(let i = 0; i < uploadedImges.length; i++){
       let uploadedImg = uploadedImges[i];
@@ -42,6 +44,7 @@ export class AddCollectionComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreviews.push(reader.result) ;
+        console.log(this.imagePreviews);
       };
       reader.readAsDataURL(uploadedImg);
     }
@@ -50,6 +53,14 @@ export class AddCollectionComponent implements OnInit {
   swapImg(e){
     let swapArrIndexes = this.imgSwap.dropImg(e, this.imgHolder);
     this.setNewPosFileArray(this.previewFiles, swapArrIndexes[0], swapArrIndexes[1]);    
+  }
+
+  removeImg(e){
+    this.holders = document.querySelectorAll('.imgHolder');
+    const indexToDelete = e.target.attributes['data-index']['value'];
+    this.previewFiles.splice(indexToDelete, 1);
+    let elementToRemove = this.holders[indexToDelete] as HTMLElement;
+    elementToRemove.style.display = "none";
   }
 
   setNewPosFileArray(arr, from, to) {
