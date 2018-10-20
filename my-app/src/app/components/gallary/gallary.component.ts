@@ -20,6 +20,7 @@ export class GallaryComponent implements OnInit {
   activeImg: string;
   displayedImg: HTMLElement;
   collectionsHolder: HTMLElement;
+  activated: boolean;
   artCollections: Array<ArtCollection>;
   delay: number;
   fadeInDelay: number;
@@ -32,6 +33,7 @@ export class GallaryComponent implements OnInit {
     this.delay = 7;
     this.fadeInDelay = 0.8;
     this.imgIndex = 0;
+    this.activated = true;
     this.collectionsHolder = document.getElementById('collections');
     this.displayedImg = document.getElementById('displayedImg');
     this.displayedImg.style.height = window.innerHeight / 2 + 'px';
@@ -43,12 +45,11 @@ export class GallaryComponent implements OnInit {
     this.artCollectionService.getArtCollections()
       .subscribe(artCollections => {
         this.artCollections = artCollections
-        this.slideShow('firstRun');
+        this.activateCollection('firstRun');
       });   
   }
 
-
-  slideShow(e): void {
+  activateCollection(e): void {
     this.imgIndex = 0;
     if(e === 'firstRun'){
       this.collectionToUse = this.artCollections[0].artCollection;
@@ -61,7 +62,7 @@ export class GallaryComponent implements OnInit {
       this.activeImg = this.collectionToUse[this.imgIndex];
     }
 
-    this.startAnimation()
+     if(this.activated) this.startAnimation();
 
   }
 
@@ -122,7 +123,9 @@ export class GallaryComponent implements OnInit {
       case "automatedCheckbox":
         const value = e.target.checked;     
         TweenMax.pauseAll();
+        this.activated = false;
         if(value === true){ 
+          this.activated = true;
           TweenMax.resumeAll();         
         }
         break;
@@ -136,5 +139,4 @@ export class GallaryComponent implements OnInit {
     }
   }
   
-
 }
