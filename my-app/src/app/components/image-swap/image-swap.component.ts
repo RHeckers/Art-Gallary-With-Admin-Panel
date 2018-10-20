@@ -31,6 +31,8 @@ export class ImageSwapComponent implements OnInit {
     
     for(let i = 0; i < this.images.length; i++){
       let image = this.images[i] as HTMLElement;
+      let first = this.images[0] as HTMLElement;
+      let last = this.images[this.images.length - 1] as HTMLElement;
       let imgPos = image.offsetLeft + image.clientWidth;
       let imgPosTop = image.offsetTop;
       let prevImage;
@@ -44,13 +46,24 @@ export class ImageSwapComponent implements OnInit {
       if(dropedImg == image){
         dropedImgIndex = i;
       } 
+      
+      if(droppedXpost < first.offsetLeft + first.clientWidth && droppedYpost < first.offsetTop + 100){
+        container.insertBefore(e.target, first);
+        dropIndex = i - 1;
+      }
 
+      if(droppedXpost > last.offsetLeft + last.clientWidth && droppedYpost < last.offsetTop + 100){
+        console.log(123)
+        container.appendChild(e.target);
+        dropIndex = i - 1;
+
+      }
+      
       if( droppedXpost < imgPos && 
           droppedXpost > prevImgPos &&
           droppedYpost < imgPosTop + 100){
-            dropIndex = i - 1;
             container.insertBefore(e.target, image);
-      }  
+          }  
     }
 
     return [dropedImgIndex, dropIndex];
