@@ -57,7 +57,7 @@ export class ImageSwapComponent implements OnInit {
         dropIndex = i;
       }
       
-      if( droppedXpost < imgPos && droppedXpost > prevImgPos &&droppedYpost < imgPosTop + 100){
+      if( droppedXpost < imgPos && droppedXpost > prevImgPos + prevImage.clientWidth && droppedYpost < imgPosTop + 100){
         container.insertBefore(e.target, image);
         dropIndex = i - 1;
       }  
