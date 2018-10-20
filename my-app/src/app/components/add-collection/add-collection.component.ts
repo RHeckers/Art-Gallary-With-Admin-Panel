@@ -51,21 +51,10 @@ export class AddCollectionComponent implements OnInit {
   }
 
   swapImg(e){
-    let swapArrIndexes = this.imgControlles.dropImg(e, this.imgHolder);
-    this.setNewPosFileArray(this.previewFiles, swapArrIndexes[0], swapArrIndexes[1]);    
+    this.imgControlles.dropImg(e, this.imgHolder, this.previewFiles);   
   }
 
   removeImg(e){
-    let indexToDelete = this.imgControlles.removeImg(e);
-    this.previewFiles.splice(indexToDelete, 1);
+    this.imgControlles.removeImg(e, this.previewFiles);    
   }
-
-  setNewPosFileArray(arr, from, to) {
-    let cutOut = arr.splice(from, 1) [0];
-    arr.splice(to, 0, cutOut); 
-    console.log(arr);
-    return arr;
-  };
-
-
 }
