@@ -21,16 +21,16 @@ export class GallaryComponent implements OnInit {
   displayedImg: HTMLElement;
   collectionsHolder: HTMLElement;
   artCollections: Array<ArtCollection>;
-  automatedSlides: Boolean;
   delay: number;
+  fadeInDelay: number;
   collectionToUse: Array<string> = [];
   imgIndex: number;
 
   constructor(private artCollectionService: ArtCollectionService) {}
 
   ngOnInit() {
-    this.automatedSlides = true;
     this.delay = 7;
+    this.fadeInDelay = 0.8;
     this.imgIndex = 0;
     this.collectionsHolder = document.getElementById('collections');
     this.displayedImg = document.getElementById('displayedImg');
@@ -60,38 +60,70 @@ export class GallaryComponent implements OnInit {
       this.collectionToUse = this.artCollections[index].artCollection;
       this.activeImg = this.collectionToUse[this.imgIndex];
     }
-    
 
-    const nextImg = () => {
-      if(this.imgIndex < this.collectionToUse.length - 1){
-        this.imgIndex++;
-      }else{
-        this.imgIndex = 0;
-      }
-      TweenMax.to(this.displayedImg, 0.5, {delay: 0.8, opacity: 1, onComplete: startAnimation});
-      setTimeout(() => {
-        this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex])
-      }, 720);
-      
+    this.startAnimation()
+
+  }
+
+  autoSwitchImg = () => {
+    if(this.imgIndex < this.collectionToUse.length - 1){
+      this.imgIndex++;
+    }else{
+      this.imgIndex = 0;
     }
+    TweenMax.to(this.displayedImg, 0.5, {delay: 0.8, opacity: 1, onComplete: this.startAnimation});
+    setTimeout(() => {
+      this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex])
+    }, 720);
     
-    const startAnimation = () => {
-      if(this.automatedSlides){
-        TweenMax.to(this.displayedImg, 1, {delay: this.delay, opacity: 0, onStart: nextImg});  
-      }
+  }
+
+  manualSwitchImg(direction){
+    switch (direction) {
+      case "prev":
+        if(this.imgIndex > 0){
+          this.imgIndex--;
+        }else{
+          this.imgIndex = this.collectionToUse.length - 1;
+        }
+        TweenMax.to(this.displayedImg, 1, {delay: 0, opacity: 0});
+        setTimeout(() => {
+          this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex])
+        }, 850);
+        TweenMax.to(this.displayedImg, 1, {delay: 0.95, opacity: 1});
+
+        
+        break;
+      case "next":
+        if(this.imgIndex < this.collectionToUse.length - 1){
+          this.imgIndex++;
+        }else{
+          this.imgIndex = 0;
+        }
+        TweenMax.to(this.displayedImg, 1, {delay: 0, opacity: 0});
+        setTimeout(() => {
+          this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex])
+        }, 850);
+        TweenMax.to(this.displayedImg, 1, {delay: 0.95, opacity: 1});
+        
+        break;
+      default:
+        break;
     }
 
-    startAnimation()
+  }
 
+  startAnimation = () => {
+    TweenMax.to(this.displayedImg, 1, {delay: this.delay, opacity: 0, onStart: this.autoSwitchImg});  
   }
 
   getInputValue(e): void{
     switch (e.target.id) {
       case "automatedCheckbox":
         const value = e.target.checked;     
-        this.automatedSlides = value;
+        TweenMax.pauseAll();
         if(value === true){ 
-          this.slideShow('restart');          
+          TweenMax.resumeAll();         
         }
         break;
     
@@ -103,7 +135,6 @@ export class GallaryComponent implements OnInit {
         break;
     }
   }
-
   
 
 }
