@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
+//Imported services
 import { ArtCollectionService } from '../../services/art-collection.service';
-import { ImageSwapComponent } from '../image-swap/image-swap.component';
+import { ImageControllesService } from '../../services/image-controlles.service';
 
 @Component({
   selector: 'app-add-collection',
@@ -17,10 +19,8 @@ export class AddCollectionComponent implements OnInit {
   holders: NodeList;
   imagePreviews: Array<any> = [];
   previewFiles: Array<File> = [];
-  imgSwap: ImageSwapComponent;
 
-  constructor(private artCollectionService: ArtCollectionService) {
-    this.imgSwap = new ImageSwapComponent()
+  constructor(private artCollectionService: ArtCollectionService, private imgControlles: ImageControllesService) {
    }
 
   ngOnInit() {
@@ -51,16 +51,13 @@ export class AddCollectionComponent implements OnInit {
   }
 
   swapImg(e){
-    let swapArrIndexes = this.imgSwap.dropImg(e, this.imgHolder);
+    let swapArrIndexes = this.imgControlles.dropImg(e, this.imgHolder);
     this.setNewPosFileArray(this.previewFiles, swapArrIndexes[0], swapArrIndexes[1]);    
   }
 
   removeImg(e){
-    this.holders = document.querySelectorAll('.imgHolder');
-    const indexToDelete = e.target.attributes['data-index']['value'];
+    let indexToDelete = this.imgControlles.removeImg(e);
     this.previewFiles.splice(indexToDelete, 1);
-    let elementToRemove = this.holders[indexToDelete] as HTMLElement;
-    elementToRemove.style.display = "none";
   }
 
   setNewPosFileArray(arr, from, to) {

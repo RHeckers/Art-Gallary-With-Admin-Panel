@@ -20,14 +20,16 @@ import { ArtCollectionService } from './services/art-collection.service';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AddCollectionComponent } from './components/add-collection/add-collection.component';
 import { EditCollectionComponent } from './components/edit-collection/edit-collection.component';
-import { ImageSwapComponent } from './components/image-swap/image-swap.component';
  
 @NgModule({
   declarations: [
     AppComponent,
     GallaryComponent,
     NavbarComponent, 
-    FooterComponent, AdminPanelComponent, AddCollectionComponent, EditCollectionComponent, ImageSwapComponent
+    FooterComponent, 
+    AdminPanelComponent, 
+    AddCollectionComponent, 
+    EditCollectionComponent
   ],
   imports: [
     AppRoutingModule,

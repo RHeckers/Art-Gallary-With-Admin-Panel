@@ -1,20 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-@Component({
-  selector: 'app-image-swap',
-  templateUrl: './image-swap.component.html',
-  styleUrls: ['./image-swap.component.css']
+@Injectable({
+  providedIn: 'root'
 })
-export class ImageSwapComponent implements OnInit {
+export class ImageControllesService {
 
   images: NodeList;
   holders: NodeList;
 
   constructor() { }
-
-  ngOnInit() {
-    
-  }
 
   dropImg(e, container){
     this.images = document.querySelectorAll('.previewImg');
@@ -70,4 +64,12 @@ export class ImageSwapComponent implements OnInit {
     return [dropedImgIndex, dropIndex];
   }
 
+  removeImg(e){
+    this.holders = document.querySelectorAll('.imgHolder');
+    const indexToDelete = e.target.attributes['data-index']['value'];
+    let elementToRemove = this.holders[indexToDelete] as HTMLElement;
+    elementToRemove.style.display = "none";
+    return indexToDelete;
+  }
 }
+ 
