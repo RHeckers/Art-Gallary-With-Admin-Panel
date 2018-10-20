@@ -49,23 +49,21 @@ export class ImageSwapComponent implements OnInit {
       
       if(droppedXpost < first.offsetLeft + first.clientWidth && droppedYpost < first.offsetTop + 100){
         container.insertBefore(e.target, first);
-        dropIndex = i - 1;
+        dropIndex = 0;
       }
 
       if(droppedXpost > last.offsetLeft + last.clientWidth && droppedYpost < last.offsetTop + 100){
-        console.log(123)
         container.appendChild(e.target);
-        dropIndex = i - 1;
-
+        dropIndex = i;
       }
       
-      if( droppedXpost < imgPos && 
-          droppedXpost > prevImgPos &&
-          droppedYpost < imgPosTop + 100){
-            container.insertBefore(e.target, image);
-          }  
+      if( droppedXpost < imgPos && droppedXpost > prevImgPos &&droppedYpost < imgPosTop + 100){
+        container.insertBefore(e.target, image);
+        dropIndex = i - 1;
+      }  
     }
-
+    
+    console.log(dropedImgIndex, dropIndex)
     return [dropedImgIndex, dropIndex];
   }
 
