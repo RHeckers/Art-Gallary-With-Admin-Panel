@@ -86,14 +86,10 @@
 }
 
 .removeImg{
-    position: absolute;
-    margin-top: -182px;
+    position: relative;
     color: red;
     font-weight: bold;
     cursor: pointer;
-}
-.removeImg:hover{
-    transform: scale(1.1)
 }
 
 .imgHolder{

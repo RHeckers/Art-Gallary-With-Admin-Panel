@@ -39,24 +39,37 @@ export class ImageControllesService {
       if(i != 0){
         prevImage = this.images[i - 1] as HTMLElement;
         prevImgPos = prevImage.offsetLeft;
+
+        console.log(droppedXpost < imgPos,
+          droppedXpost > prevImgPos + prevImage.clientWidth,
+          droppedYpost < imgPosTop + 100,
+          "droppedXpost", droppedXpost,
+          "droppedYpost", droppedYpost,
+          "imgPos", imgPos,
+          "prevPos", prevImgPos + prevImage.clientWidth,
+          "imgPosTop", imgPosTop + 100
+          )
       } 
       
       if(dropedImg == image){
         dropedImgIndex = i;
       } 
+
+      
       
       if(droppedXpost < first.offsetLeft + first.clientWidth && droppedYpost < first.offsetTop + 100){
         container.insertBefore(holderToDrop, insertFirst);
         dropIndex = 0;
-      }
-      else if(droppedXpost > last.offsetLeft + last.clientWidth && droppedYpost < last.offsetTop + 100){
-        container.appendChild(holderToDrop);
-        dropIndex = i;
+        i = this.images.length;
       }
       else if( droppedXpost < imgPos && droppedXpost > prevImgPos + prevImage.clientWidth && droppedYpost < imgPosTop + 100){
         container.insertBefore(holderToDrop, insertBefore);
-        dropIndex = i - 1;
+        dropIndex = i;
+        i = this.images.length;
+
+        
       }  
+      
     }
     
     this.globalService.setNewPosFileArray(array, dropedImgIndex, dropIndex);
