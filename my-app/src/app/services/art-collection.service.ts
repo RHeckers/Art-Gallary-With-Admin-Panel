@@ -7,6 +7,11 @@ import { map } from 'rxjs/operators';
 //Imported models
 import { ArtCollection } from './../models/ArtCollection';
 
+//Imported services
+import { ImageControllesService } from './image-controlles.service';
+
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +22,7 @@ export class ArtCollectionService {
   private artCollection: ArtCollection;
   private updatedCollections = new Subject<Array<ArtCollection>>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private imgControlles: ImageControllesService) { }
 
   getArtCollections (): Observable<Array<ArtCollection>> {
     this.http.get<Array<any>>('http://localhost:3000/api/artCollections')
@@ -58,6 +63,29 @@ export class ArtCollectionService {
     })
     
 
+  }
+
+  updateArtCollection(collection){
+    let images = collection.artCollection;
+    let indexes = []
+    for(let i = 0; i < images.length; i++){
+      const image = images[i];
+      if(!image.includes('http://')){
+        indexes.push(i);
+      }
+    }
+    for(let i = 0; i < indexes.length; i++){
+      let arrIndex = indexes[i];
+      images[arrIndex] = this.imgControlles.newImgPaths[i];
+    }
+
+    const updatedCollection = {
+      id: collection.id,
+      title: collection.title,
+      artCollection: images
+    }
+
+    console.log(updatedCollection);
   }
 
   deleteArtCollection(collectionId: string){

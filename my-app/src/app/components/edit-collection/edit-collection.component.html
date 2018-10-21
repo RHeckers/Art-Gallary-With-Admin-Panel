@@ -1,3 +1,50 @@
-<p>
-  edit-collection works!
-</p>
+<div class="container">
+  <div class="titleHolder">
+    <h1 class="editPageTitle">Edit Art Collections:</h1>
+  </div>
+
+  <div *ngFor="let collection of artCollections; let i = index">
+    <div *ngIf="edit != i;else editForm">
+      <div class="collections">
+        <p class="collectionTitle">{{collection.title}}</p>
+        <button class="editBtn" (click)="startEdit($event, i)">EDIT</button>
+      </div>
+    </div>
+
+    <ng-template #editForm>
+      <div class="collections">
+        <input type="text" #titleInput class="collectionTitleInput" value={{collection.title}}>
+        <button class="editBtn2">EDIT</button>
+      </div>
+
+      <button 
+      class="imgInputBtn" 
+      (click)="filePicker.click()"
+      >Click To Add Images</button> 
+      <p>Drag and drop to change the display order</p>
+
+    <input 
+      #filePicker
+      class="fileInput" 
+      id="imgInput" 
+      type="file"
+      multiple
+      (change)="addImages($event, i)">
+      
+      <div class="collectionImages" id="collectionImages" data-index="i">
+          <div *ngFor="let image of collection.artCollection; let i = index" class="imgHolder">
+              <img  
+              [src]="image" 
+              (dragend)="swapImg($event, collection.artCollection)"
+              class="collectionImg previewImg" 
+              alt=""
+              [attr.data-index]="i"> 
+              <p class="removeImg" [attr.data-index]="i" (click)="removeImg($event, collection.artCollection)">X</p>
+          </div>
+      </div>
+      <button class="imgInputBtn" (click)="updateCollection($event, i, titleInput.value, collection.id)">CONFIRM CHANGES</button> 
+    </ng-template>
+
+  </div>
+
+</div>

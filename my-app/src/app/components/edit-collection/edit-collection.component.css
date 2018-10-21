@@ -1,0 +1,110 @@
+.titleHolder{
+    text-align: center;
+    width: 100%;
+}
+
+.editPageTitle{
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.collections{
+    width: 800px;
+    height: 40px;
+    border: 1px solid black;
+    margin: 5px 0;
+    margin-left: calc(50% - 400px);
+    background: rgba(226, 210, 210, 0.767);
+    border-radius: 2px;
+}
+
+.collectionTitle{
+    display: inline-block;
+    font-size: 20px;
+    margin: 10px 0 0 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.collectionTitleInput{
+    display: inline-block;
+    font-size: 20px;
+    margin: 6px 0 0 10px;
+    padding-left: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.editBtn{
+    position: relative;
+    display: block;
+    margin-top: -22px;
+    margin-left: 740px;
+    height: 25px;
+    width: 50px;
+    padding: 0 !important;
+    cursor: pointer;
+}
+.editBtn2{
+    position: relative;
+    display: block;
+    margin-top: -27px;
+    margin-left: 740px;
+    height: 25px;
+    width: 50px;
+    padding: 0 !important;
+    cursor: pointer;
+}
+
+.collectionImages{
+    width: 800px;
+    max-height: 800px;
+    overflow: auto;
+    margin-left: calc(50% - 400px);
+}
+
+.collectionImg{
+    max-height: 180px;
+    margin: 10px;
+}
+
+.removeImg{
+    position: relative;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.imgHolder{
+    display: inline-block;
+}
+
+.fileInput{
+    visibility: hidden;
+}
+
+.imgInputBtn{
+    width: 800px;
+    height: 40px;
+    margin: 15px 0;
+    margin-left: calc(50% - 400px);
+    font-size: 20px;
+    padding-left: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    color: white;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    background-size: 300% 100%;
+    background-image: linear-gradient(to right, rgb(1, 19, 37), rgb(120, 19, 37), rgb(185, 19, 37), rgb(200, 19, 37), rgb(1, 19, 37));
+
+
+}
+.imgInputBtn:hover{
+    background-position: 100% 0;
+}

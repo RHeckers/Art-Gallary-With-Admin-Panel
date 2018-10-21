@@ -1,86 +1,115 @@
-import { Injectable } from '@angular/core';
-import { GlobalServiceService } from './global-service.service';
+import { Injectable } from "@angular/core";
+import { GlobalServiceService } from "./global-service.service";
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ImageControllesService {
 
   images: NodeList;
   holders: NodeList;
+  newImgPaths: Object;
 
-  constructor(private globalService: GlobalServiceService) { }
+  constructor(private globalService: GlobalServiceService, private http: HttpClient) {}
 
-  dropImg(e, container, array?){
-    this.images = document.querySelectorAll('.previewImg');
-    this.holders = document.querySelectorAll('.imgHolder');
-    for(let i = 0; i < this.images.length; i++){
-      let image = this.images[i] as HTMLElement;
-      image.setAttribute('id', 'previewImg' + i);  
+  getPreviewImages(uploadedImges){
+    const previewFiles = []
+    const imagePreviews = []
+  
+    for(let i = 0; i < uploadedImges.length; i++){
+      let uploadedImg = uploadedImges[i];
+      previewFiles.push(uploadedImg);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        imagePreviews.push(reader.result);
+      };
+      reader.readAsDataURL(uploadedImg);
     }
-    let dropedImgIndex;
+
+    return { previewFiles: previewFiles, imagePreviews: imagePreviews};
+  }
+
+  dropImg(e, container, array?) {
+    this.images = document.querySelectorAll(".previewImg");
+    this.holders = document.querySelectorAll(".imgHolder");
+    for (let i = 0; i < this.images.length; i++) {
+      let image = this.images[i] as HTMLElement;
+      image.setAttribute("id", "previewImg" + i);
+    }
+  
     let dropIndex;
-    const dropedImg = e.target;
+    const dropedImg = e.target as HTMLElement;
+    const dropedImgIndex = dropedImg.getAttribute('data-index');
     const holderToDrop = e.target.parentElement;
-    const droppedXpost = e.clientX
-    const droppedYpost = e.clientY
-    
-    for(let i = 0; i < this.images.length; i++){
+    const droppedXpost = e.clientX;
+    const droppedYpost = e.clientY - 180;
+
+    for (let i = 0; i < this.images.length; i++) {
       let insertBefore = this.holders[i] as HTMLElement;
       let image = this.images[i] as HTMLElement;
       let first = this.images[0] as HTMLElement;
-      let last = this.images[this.images.length - 1] as HTMLElement;
       let insertFirst = this.holders[0] as HTMLElement;
       let imgPos = image.offsetLeft + image.clientWidth;
       let imgPosTop = image.offsetTop;
       let prevImage;
-      let prevImgPos;
+      let prevImgPos;      
 
-      if(i != 0){
+      if (i != 0) {
         prevImage = this.images[i - 1] as HTMLElement;
         prevImgPos = prevImage.offsetLeft;
 
-        console.log(droppedXpost < imgPos,
-          droppedXpost > prevImgPos + prevImage.clientWidth,
-          droppedYpost < imgPosTop + 100,
-          "droppedXpost", droppedXpost,
-          "droppedYpost", droppedYpost,
-          "imgPos", imgPos,
-          "prevPos", prevImgPos + prevImage.clientWidth,
-          "imgPosTop", imgPosTop + 100
-          )
-      } 
-      
-      if(dropedImg == image){
-        dropedImgIndex = i;
-      } 
+        if (
+          droppedXpost < imgPos &&
+          droppedXpost > prevImgPos + prevImage.clientWidth / 2 &&
+          droppedYpost < imgPosTop
+        ) {
+          container.insertBefore(holderToDrop, insertBefore);
+          dropIndex = i;
+          i = this.images.length;
+        }
 
-      
-      
-      if(droppedXpost < first.offsetLeft + first.clientWidth && droppedYpost < first.offsetTop + 100){
+        console.log(droppedXpost < imgPos &&
+          droppedXpost > prevImgPos + prevImage.clientWidth / 2 &&
+          droppedYpost < imgPosTop,
+          droppedXpost < imgPos ,
+          droppedXpost > prevImgPos + prevImage.clientWidth / 2 ,
+          droppedYpost < imgPosTop,
+          droppedYpost , imgPosTop,)
+      }
+
+      if (
+        droppedXpost < first.offsetLeft + first.clientWidth / 2 &&
+        droppedYpost < first.offsetTop
+      ) {
         container.insertBefore(holderToDrop, insertFirst);
         dropIndex = 0;
         i = this.images.length;
       }
-      else if( droppedXpost < imgPos && droppedXpost > prevImgPos + prevImage.clientWidth && droppedYpost < imgPosTop + 100){
-        container.insertBefore(holderToDrop, insertBefore);
-        dropIndex = i;
-        i = this.images.length;
-
-        
-      }  
-      
     }
-    
     this.globalService.setNewPosFileArray(array, dropedImgIndex, dropIndex);
   }
 
-  removeImg(e, array?){
-    this.holders = document.querySelectorAll('.imgHolder');
-    const indexToDelete = e.target.attributes['data-index']['value'];
+  uploadImages(art: Array<any>){
+    let newPaths
+    const newImages = new FormData();
+    for(let i = 0; i < art.length; i++){
+      newImages.append("images", art[i]);
+    }
+       
+    this.http.post('http://localhost:3000/api/artCollection/addImages', newImages)
+    .subscribe((res) => {
+      this.newImgPaths = res;
+    });
+
+  }
+
+  removeImg(e, array?) {
+    this.holders = document.querySelectorAll(".imgHolder");
+    const indexToDelete = e.target.attributes["data-index"]["value"];
     let elementToRemove = this.holders[indexToDelete] as HTMLElement;
     elementToRemove.style.display = "none";
     array.splice(indexToDelete, 1);
   }
 }
- 

@@ -51,6 +51,19 @@ app.use(bodyParser.json());
 
 app.use("/images", express.static(path.join("backend/images")));
 
+app.post('/api/artCollection/addImages', multer({storage: fileStorage}).array("images"), (req, res, next) => {
+    console.log(req.files);
+    const url = req.protocol + "://" + req.get("host");
+    const imgPaths = []
+    for(let i = 0; i < req.files.length; i++){
+        imgPaths.push(url + "/images/" + req.files[i].filename);
+    }
+    
+    res.status(201).json(imgPaths);
+  
+    
+});
+
 app.post('/api/artCollection', multer({storage: fileStorage}).array("images"), (req, res, next) => {
     console.log(req.files);
     const url = req.protocol + "://" + req.get("host");

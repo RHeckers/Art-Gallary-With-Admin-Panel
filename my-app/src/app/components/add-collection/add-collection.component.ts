@@ -50,19 +50,9 @@ export class AddCollectionComponent implements OnInit {
     } 
   }
 
-  uploadImg(e){
-    const uploadedImges = e.target.files;
-  
-    for(let i = 0; i < uploadedImges.length; i++){
-      let uploadedImg = uploadedImges[i];
-      this.previewFiles.push(uploadedImg);
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreviews.push(reader.result) ;
-      };
-      reader.readAsDataURL(uploadedImg);
-    }
+  getPreviewImages(e){
+    this.previewFiles = this.imgControlles.getPreviewImages(e.target.files)['previewFiles'];
+    this.imagePreviews = this.imgControlles.getPreviewImages(e.target.files)['imagePreviews'];
   }
 
   swapImg(e){

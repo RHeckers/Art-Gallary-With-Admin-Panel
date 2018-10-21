@@ -25,7 +25,7 @@
       id="imgInput" 
       type="file"
       multiple
-      (change)="uploadImg($event)">
+      (change)="getPreviewImages($event)">
       
   </div>
 
@@ -43,7 +43,8 @@
           [src]="image" 
           (dragend)="swapImg($event)"
           class="previewImg" 
-          alt=""> 
+          alt=""
+          [attr.data-index]="i"> 
           <p class="removeImg" [attr.data-index]="i" (click)="removeImg($event)">X</p>
       </div>
       
