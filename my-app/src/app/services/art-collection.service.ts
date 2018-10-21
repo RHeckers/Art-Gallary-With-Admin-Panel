@@ -58,7 +58,7 @@ export class ArtCollectionService {
     this.http.post<ArtCollection>('http://localhost:3000/api/artCollection', artCollectionData)
     .subscribe((res) => {
       const newCollection = {id: res.id, title: title, artCollection: res.artCollection}
-      this.artCollections.push(newCollection);
+      this.artCollections.unshift(newCollection);
       this.updatedCollections.next([...this.artCollections]);
     })
     
@@ -84,6 +84,9 @@ export class ArtCollectionService {
       title: collection.title,
       artCollection: images
     }
+
+    this.http.put('http://localhost:3000/api/artCollections/' + collection.id, updatedCollection)
+      .subscribe(res => console.log(res));
 
     console.log(updatedCollection);
   }

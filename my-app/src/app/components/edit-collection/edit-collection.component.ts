@@ -28,12 +28,15 @@ export class EditCollectionComponent implements OnInit {
   getArtCollections(): void {
     this.artCollectionService.getArtCollections()
       .subscribe(artCollections => {
-        this.artCollections = artCollections
+        this.artCollections = artCollections;
       });
   }
 
   startEdit(e, index){
+    this.imgControlles.previewFiles = [];
+    this.imgControlles.imagePreviews = [];
     this.imgHolders = document.querySelectorAll('.collectionImages'); 
+    console.log(this.imgHolders)
     this.imgControlles.newImgPaths = [];
 
     for(let i = 0; i < this.imgHolders.length; i++){
@@ -47,18 +50,26 @@ export class EditCollectionComponent implements OnInit {
     this.edit = index;
   }
 
+  closeEdit(){
+    this.edit = -1
+  }
+
   updateCollection(e, index, title, id){
     const updatedCollection = {
       id: id,
       title: title,
       artCollection: this.artCollections[index].artCollection
     }
+    this.artCollections[index] = updatedCollection;
+    
     this.artCollectionService.updateArtCollection(updatedCollection);
+    this.closeEdit();
   }
 
   addImages(e, index){    
-    this.previewFiles = this.imgControlles.getPreviewImages(e.target.files)['previewFiles'];
-    this.imagePreviews = this.imgControlles.getPreviewImages(e.target.files)['imagePreviews']
+    let files = this.imgControlles.getPreviewImages(e.target.files);
+    this.previewFiles = files['previewFiles'];
+    this.imagePreviews = files['imagePreviews'];
     this.imgControlles.uploadImages(this.previewFiles);
 
     //Set timeout is a temp fix
@@ -78,8 +89,9 @@ export class EditCollectionComponent implements OnInit {
     this.imgControlles.removeImg(e, array);
   }
 
-  deleteCollection(collectionId){
-    console.log(collectionId);
+  deleteCollection(collectionId, el){
+    console.log(collectionId, el);
+    el.remove();
     this.artCollectionService.deleteArtCollection(collectionId);
   }
 

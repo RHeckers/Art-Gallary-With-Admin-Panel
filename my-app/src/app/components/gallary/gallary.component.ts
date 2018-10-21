@@ -44,7 +44,8 @@ export class GallaryComponent implements OnInit {
   getArtCollections(): void {
     this.artCollectionService.getArtCollections()
       .subscribe(artCollections => {
-        this.artCollections = artCollections
+        this.artCollections = artCollections;
+        console.log(this.artCollections)
         this.activateCollection('firstRun');
       });   
   }

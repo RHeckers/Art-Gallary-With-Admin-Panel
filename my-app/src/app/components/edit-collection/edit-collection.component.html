@@ -3,19 +3,20 @@
     <h1 class="editPageTitle">Edit Art Collections:</h1>
   </div>
 
-  <div *ngFor="let collection of artCollections; let i = index">
+  <div *ngFor="let collection of artCollections; let i = index" #element>
     <div *ngIf="edit != i;else editForm">
       <div class="collections">
         <p class="collectionTitle">{{collection.title}}</p>
         <button class="editBtn" (click)="startEdit($event, i)">EDIT</button>
-        <button class="deleteBtn" (click)="deleteCollection(collection.id)">DELETE</button>
+        <button class="deleteBtn" (click)="deleteCollection(collection.id, element)">DELETE</button>
       </div>
     </div>
 
     <ng-template #editForm>
       <div class="collections">
         <input type="text" #titleInput class="collectionTitleInput" value={{collection.title}}>
-        <button class="deleteBtn2" (click)="deleteCollection(collection.id)">DELETE</button>
+        <button class="editBtn2" (click)="closeEdit($event, i)">Close</button>
+        <button class="deleteBtn2" (click)="deleteCollection(collection.id, element)">DELETE</button>
       </div>
 
       <button 

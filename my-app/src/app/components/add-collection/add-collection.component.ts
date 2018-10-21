@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
+
 
 //Imported services
 import { ArtCollectionService } from '../../services/art-collection.service';
@@ -13,7 +15,6 @@ import { GlobalServiceService } from '../../services/global-service.service';
 export class AddCollectionComponent implements OnInit {
 
   collectionTitle: string;
-  dragedImgOffset: number;
   imgHolder: HTMLElement;
   imgInput: HTMLElement;
   images: NodeList;
@@ -26,7 +27,8 @@ export class AddCollectionComponent implements OnInit {
   constructor(
     private artCollectionService: ArtCollectionService, 
     private imgControlles: ImageControllesService,
-    private globalService: GlobalServiceService) {
+    private globalService: GlobalServiceService,
+    private router: Router) {
    }
 
   ngOnInit() {
@@ -39,20 +41,28 @@ export class AddCollectionComponent implements OnInit {
 
   addCollection(){
     if(this.collectionTitle && this.previewFiles != []){
-      this.artCollectionService.addArtCollection(this.collectionTitle, this.previewFiles);  
+      this.artCollectionService.addArtCollection(this.collectionTitle, this.previewFiles); 
+      this.imgControlles.imagePreviews = [];
+      this.imgControlles.previewFiles = [];
+      this.imagePreviews = []
+      this.previewFiles = [];
+      this.collectionTitle = '';
+      return;
     }
+
 
     if(!this.collectionTitle || this.collectionTitle.length < 3 || this.collectionTitle.length > 25){
       this.globalService.insertError('Title needs to be between 3 and 25 characters', this.titleInput)
     }
-    if(this.previewFiles != []){
+    if(this.previewFiles == []){
       this.globalService.insertError('There needs to be at least one picture in the collection', this.previewHeader)
     } 
   }
 
   getPreviewImages(e){
-    this.previewFiles = this.imgControlles.getPreviewImages(e.target.files)['previewFiles'];
-    this.imagePreviews = this.imgControlles.getPreviewImages(e.target.files)['imagePreviews'];
+    let files = this.imgControlles.getPreviewImages(e.target.files);
+    this.previewFiles = files['previewFiles'];
+    this.imagePreviews = files['imagePreviews'];
   }
 
   swapImg(e){

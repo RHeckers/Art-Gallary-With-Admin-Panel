@@ -10,25 +10,25 @@ export class ImageControllesService {
   images: NodeList;
   holders: NodeList;
   newImgPaths: Object;
+  previewFiles = [];
+  imagePreviews = []; 
 
   constructor(private globalService: GlobalServiceService, private http: HttpClient) {}
 
   getPreviewImages(uploadedImges){
-    const previewFiles = []
-    const imagePreviews = []
-  
+ 
     for(let i = 0; i < uploadedImges.length; i++){
       let uploadedImg = uploadedImges[i];
-      previewFiles.push(uploadedImg);
+      this.previewFiles.push(uploadedImg);
 
       const reader = new FileReader();
       reader.onload = () => {
-        imagePreviews.push(reader.result);
+        this.imagePreviews.push(reader.result);
       };
       reader.readAsDataURL(uploadedImg);
     }
 
-    return { previewFiles: previewFiles, imagePreviews: imagePreviews};
+    return { previewFiles: this.previewFiles, imagePreviews: this.imagePreviews};
   }
 
   dropImg(e, container, array?) {

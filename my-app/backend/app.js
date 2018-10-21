@@ -88,16 +88,32 @@ app.post('/api/artCollection', multer({storage: fileStorage}).array("images"), (
 app.get('/api/artCollections',(req, res, next) => {
     ArtCollection.find()
       .then(collections => {
-          res.status(200).json(collections);
+          res.status(200).json(collections.reverse());
       });
+});
+
+app.put('/api/artCollections/:id', (req, res, next) => {
+    const newCollection = new ArtCollection({
+        _id: req.body.id,
+        title: req.body.title,
+        artCollection: req.body.artCollection
+    })
+    ArtCollection.updateOne({_id: req.params.id}, newCollection)
+        .then(result => {
+            console.log(result)
+            res.status(200).json({msg: 'Post Updated!'})
+        })
+        .catch(err => console.log(err));
+
 });
 
 app.delete('/api/artCollections/:id', (req, res, next) => {
     ArtCollection.deleteOne({_id: req.params.id})
       .then(result => {
-        console.log(result);
+        console.log(result['artCollection']);
         res.status(200).json({msg: "Post deleted!"})
-      });
+      })
+      .catch(err => res.status(400).json({ msg: 'Something went wrong deleting the user!'}));
 });
 
 module.exports = app;

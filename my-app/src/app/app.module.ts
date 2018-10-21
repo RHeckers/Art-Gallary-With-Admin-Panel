@@ -20,6 +20,7 @@ import { ArtCollectionService } from './services/art-collection.service';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AddCollectionComponent } from './components/add-collection/add-collection.component';
 import { EditCollectionComponent } from './components/edit-collection/edit-collection.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
  
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { EditCollectionComponent } from './components/edit-collection/edit-colle
     FooterComponent, 
     AdminPanelComponent, 
     AddCollectionComponent, 
-    EditCollectionComponent
+    EditCollectionComponent, NotFoundComponent
   ],
   imports: [
     AppRoutingModule,
