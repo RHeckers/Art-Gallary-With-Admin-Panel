@@ -8,6 +8,7 @@
    #inputCollectionTitle
    [(ngModel)]="collectionTitle" 
    class="titleInput" 
+   id="titleInput"
    name="titleInput" type="text" 
    placeholder="Enter a title for the art collection">
   
@@ -30,7 +31,7 @@
 
   <div class="previewCollection">
     <div class="titleHolder">
-      <h2 class="previewHeader">Preview:</h2>
+      <h2 class="previewHeader" id="previewHeader">Preview:</h2>
     </div>
 
     <h3 class="label">Preview Titlte: <p class="bold-uppercase-inline">{{collectionTitle}}</p></h3>

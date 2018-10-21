@@ -57,3 +57,10 @@ table {
 	text-transform: uppercase;
 	display: inline-block;
 }
+
+.errorMsg{
+	color: red;
+	margin: 5px;
+	width: 100%;
+	text-align: center;
+}

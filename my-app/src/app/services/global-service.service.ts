@@ -12,4 +12,14 @@ export class GlobalServiceService {
     arr.splice(to, 0, cutOut); 
     return arr;
   };
+
+  insertError(msg, insertAfter){
+    let error = document.createElement('p');
+    error.className = 'errorMsg';
+    error.innerHTML = msg;
+    insertAfter.parentNode.insertBefore(error, insertAfter.nextSibling);
+    setTimeout(() => {
+      error.remove();
+    }, 3000);
+  }
 }
