@@ -78,4 +78,9 @@ export class EditCollectionComponent implements OnInit {
     this.imgControlles.removeImg(e, array);
   }
 
+  deleteCollection(collectionId){
+    console.log(collectionId);
+    this.artCollectionService.deleteArtCollection(collectionId);
+  }
+
 }

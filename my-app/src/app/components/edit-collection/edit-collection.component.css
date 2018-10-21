@@ -45,8 +45,26 @@
     width: 50px;
     padding: 0 !important;
     cursor: pointer;
+    background: green;
+    border: 1px solid green;
+    border-radius: 5px;
+    font-weight: bold;
 }
-.editBtn2{
+.deleteBtn{
+    position: relative;
+    display: block;
+    margin-top: -25px;
+    margin-left: 670px;
+    height: 25px;
+    width: 60px;
+    padding: 0 !important;
+    cursor: pointer;
+    background: red;
+    border: 1px solid red;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.deleteBtn2{
     position: relative;
     display: block;
     margin-top: -27px;
@@ -55,6 +73,10 @@
     width: 50px;
     padding: 0 !important;
     cursor: pointer;
+    background: red;
+    border: 1px solid red;
+    border-radius: 5px;
+    font-weight: bold;
 }
 
 .collectionImages{

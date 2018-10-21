@@ -13,7 +13,8 @@ const routes: Routes = [
     {path: '', component: GallaryComponent},
     {path: 'admin', component: AdminPanelComponent},
     {path: 'add-collection', component: AddCollectionComponent},
-    {path: 'edit-collection', component: EditCollectionComponent}
+    {path: 'edit-collection', component: EditCollectionComponent},
+    {path: 'edit-collection/:id', component: EditCollectionComponent}
   ]; 
 
 @NgModule({

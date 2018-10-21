@@ -8,13 +8,14 @@
       <div class="collections">
         <p class="collectionTitle">{{collection.title}}</p>
         <button class="editBtn" (click)="startEdit($event, i)">EDIT</button>
+        <button class="deleteBtn" (click)="deleteCollection(collection.id)">DELETE</button>
       </div>
     </div>
 
     <ng-template #editForm>
       <div class="collections">
         <input type="text" #titleInput class="collectionTitleInput" value={{collection.title}}>
-        <button class="editBtn2">EDIT</button>
+        <button class="deleteBtn2" (click)="deleteCollection(collection.id)">DELETE</button>
       </div>
 
       <button 

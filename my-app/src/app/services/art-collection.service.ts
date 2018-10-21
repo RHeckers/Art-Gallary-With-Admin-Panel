@@ -89,7 +89,7 @@ export class ArtCollectionService {
   }
 
   deleteArtCollection(collectionId: string){
-    this.http.delete('http://localhost:3000/api/artCollection' + collectionId)
+    this.http.delete('http://localhost:3000/api/artCollections/' + collectionId)
      .subscribe(() => console.log("Collection deleted!"));
   }
 
