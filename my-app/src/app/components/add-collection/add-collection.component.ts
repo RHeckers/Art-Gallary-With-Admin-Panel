@@ -35,7 +35,6 @@ export class AddCollectionComponent implements OnInit {
 
   uploadImg(e){
     const uploadedImges = e.target.files;
-    console.log(uploadedImges)
   
     for(let i = 0; i < uploadedImges.length; i++){
       let uploadedImg = uploadedImges[i];
@@ -44,7 +43,6 @@ export class AddCollectionComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreviews.push(reader.result) ;
-        console.log(this.imagePreviews);
       };
       reader.readAsDataURL(uploadedImg);
     }
