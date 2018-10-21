@@ -67,7 +67,7 @@ export class EditCollectionComponent implements OnInit {
   }
 
   addImages(e, index){    
-    let files = this.imgControlles.getPreviewImages(e.target.files);
+    let files = this.imgControlles.getPreviewImages(e.target.files); 
     this.previewFiles = files['previewFiles'];
     this.imagePreviews = files['imagePreviews'];
     this.imgControlles.uploadImages(this.previewFiles);
