@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GlobalServiceService } from './global-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,9 @@ export class ImageControllesService {
   images: NodeList;
   holders: NodeList;
 
-  constructor() { }
+  constructor(private globalService: GlobalServiceService) { }
 
-  dropImg(e, container){
+  dropImg(e, container, array?){
     this.images = document.querySelectorAll('.previewImg');
     this.holders = document.querySelectorAll('.imgHolder');
     for(let i = 0; i < this.images.length; i++){
@@ -49,26 +50,27 @@ export class ImageControllesService {
         dropIndex = 0;
       }
 
-      if(droppedXpost > last.offsetLeft + last.clientWidth && droppedYpost < last.offsetTop + 100){
+      else if(droppedXpost > last.offsetLeft + last.clientWidth && droppedYpost < last.offsetTop + 100){
         container.appendChild(holderToDrop);
         dropIndex = i;
       }
       
-      if( droppedXpost < imgPos && droppedXpost > prevImgPos + prevImage.clientWidth && droppedYpost < imgPosTop + 100){
+      else if( droppedXpost < imgPos && droppedXpost > prevImgPos + prevImage.clientWidth && droppedYpost < imgPosTop + 100){
         container.insertBefore(holderToDrop, insertBefore);
         dropIndex = i - 1;
       }  
     }
     
-    console.log(dropedImgIndex, dropIndex)
+    this.globalService.setNewPosFileArray(array, dropedImgIndex, dropIndex)
     return [dropedImgIndex, dropIndex];
   }
 
-  removeImg(e){
+  removeImg(e, array?){
     this.holders = document.querySelectorAll('.imgHolder');
     const indexToDelete = e.target.attributes['data-index']['value'];
     let elementToRemove = this.holders[indexToDelete] as HTMLElement;
     elementToRemove.style.display = "none";
+    array.splice(indexToDelete, 1);
     return indexToDelete;
   }
 }
