@@ -98,7 +98,7 @@ export class ImageControllesService {
       newImages.append("images", art[i]);
     }
        
-    this.http.post('http://localhost:3000/api/artCollection/addImages', newImages)
+    this.http.post('http://localhost:3000/api/artCollections/addImages', newImages)
     .subscribe((res) => {
       this.newImgPaths = res;
     });

@@ -55,7 +55,7 @@ export class ArtCollectionService {
         artCollectionData.append("images", art[i]);
     }
       
-    this.http.post<ArtCollection>('http://localhost:3000/api/artCollection', artCollectionData)
+    this.http.post<ArtCollection>('http://localhost:3000/api/artCollections', artCollectionData)
     .subscribe((res) => {
       const newCollection = {id: res.id, title: title, artCollection: res.artCollection}
       this.artCollections.unshift(newCollection);
