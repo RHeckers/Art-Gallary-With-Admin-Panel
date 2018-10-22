@@ -33,8 +33,8 @@
       multiple
       (change)="addImages($event, i)">
       
-      <div class="collectionImages" id="collectionImages" data-index="i">
-          <div *ngFor="let image of collection.artCollection; let i = index" class="imgHolder">
+      <div class="collectionImages" id="collectionImages" data-index="i" (dragover)="allowDrop($event)">
+          <div *ngFor="let image of collection.artCollection; let i = index" class="imgHolder" (dragover)="allowDrop($event)">
               <img  
               [src]="image" 
               (dragend)="swapImg($event, collection.artCollection)"

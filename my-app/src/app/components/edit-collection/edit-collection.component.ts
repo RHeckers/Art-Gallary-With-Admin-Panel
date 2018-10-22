@@ -38,6 +38,10 @@ export class EditCollectionComponent implements OnInit {
       });
   }
 
+  allowDrop(ev) {
+    ev.preventDefault();
+}
+
   //Function to start editing an art collection
   startEdit(e, index){
     //Empty the previously filled arrays inside the service

@@ -51,6 +51,8 @@ export class AddCollectionComponent implements OnInit {
       return;
     }
 
+    
+
     //If there is no title or the title is to short, insert error message
     if(!this.collectionTitle || 
        this.collectionTitle.length < 3 || 
@@ -66,6 +68,10 @@ export class AddCollectionComponent implements OnInit {
         this.previewHeader);
     } 
   }
+
+  allowDrop(ev) {
+    ev.preventDefault();
+}
 
   //Function to add new images to the preview
   getPreviewImages(e){
