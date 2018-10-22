@@ -90,7 +90,22 @@
       left:0;
       bottom:0;
     }
-    .loginBtn:hover:before,.loginBtn:hover:after{
+
+.loginBtn:hover:before,.loginBtn:hover:after{
       width:100%;
       transition:800ms ease all;
-    }
+}
+
+@media only screen and (max-width: 1100px){
+  .btnHolder{
+    margin-top: 0px !important;
+  }
+
+  .btn{
+    font-size: 2rem;
+    width: 100%;
+    margin: 50px 0;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+}

@@ -1,17 +1,9 @@
-.fileInput{
-    visibility: hidden;
-}
-
 .titleInput{
     width: 80%;
     margin-left: 10%;
     height: 30px;
     font-size: 20px;
     padding-left: 5px;
-}
-
-.titleHolder{
-    text-align: center;
 }
 
 .pageTitle{

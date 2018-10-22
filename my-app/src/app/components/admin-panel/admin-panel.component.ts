@@ -15,7 +15,6 @@ export class AdminPanelComponent implements OnInit {
   ngOnInit() {
     this.btnHolder = document.getElementById('btnHolder');
     this.windowHeight = window.innerHeight;
-
     this.btnHolder.style.marginTop = this.windowHeight / 3.2 + 'px';
   }
 

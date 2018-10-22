@@ -64,3 +64,11 @@ table {
 	width: 100%;
 	text-align: center;
 }
+
+.fileInput{
+    visibility: hidden; 
+}
+
+.centerText{
+    text-align: center;
+}
