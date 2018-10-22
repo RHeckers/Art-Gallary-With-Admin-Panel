@@ -38,13 +38,13 @@ export class ImageControllesService {
       let image = this.images[i] as HTMLElement;
       image.setAttribute("id", "previewImg" + i);
     }
-  
+
     let dropIndex;
     const dropedImg = e.target as HTMLElement;
     const dropedImgIndex = dropedImg.getAttribute('data-index');
     const holderToDrop = e.target.parentElement;
     const droppedXpost = e.clientX;
-    const droppedYpost = e.clientY + 150;
+    const droppedYpost = dropedImg.offsetTop - 10;
 
     for (let i = 0; i < this.images.length; i++) {
       let insertBefore = this.holders[i] as HTMLElement;
@@ -58,7 +58,7 @@ export class ImageControllesService {
 
       if (i != 0) {
         prevImage = this.images[i - 1] as HTMLElement;
-        prevImgPos = prevImage.offsetLeft;
+        prevImgPos = prevImage.offsetLeft;        
 
         if (
           droppedXpost < imgPos &&
@@ -70,9 +70,8 @@ export class ImageControllesService {
           i = this.images.length;
         }
       }
-
       if (
-        droppedXpost < first.offsetLeft + first.clientWidth / 2 &&
+        droppedXpost < first.offsetLeft + first.clientWidth &&
         droppedYpost < first.offsetTop + 180
       ) {
         container.insertBefore(holderToDrop, insertFirst);

@@ -48,8 +48,10 @@
 }
 
 .previewImages{
-    overflow: auto;
     max-height: 400px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
 }
 
 .previewImg:active{
