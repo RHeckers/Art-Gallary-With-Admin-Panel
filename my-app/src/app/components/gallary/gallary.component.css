@@ -41,8 +41,8 @@
     display: inline-block;
     align-content: center;
     margin-top: 50px;
-    margin-left: 40%;
-    width: 60%;
+    margin-left: 30%;
+    width: 80%;
     text-align: center;
 
 }
@@ -56,7 +56,11 @@
     margin: 10px 150px;
     margin-top: 20px;
     cursor: pointer;
-    
+     
+}
+
+.arrowLeft{
+    margin-left: 150px;
 }
 
 .arrow:hover{
@@ -89,4 +93,65 @@
     margin: 5px;
     text-align: center;
     font-weight: bold;
+}
+
+@media only screen and (min-width: 1600px){
+    .displayedImg{
+        max-height: 700px;
+    }
+}
+
+@media only screen and (max-width: 1366px){
+    .imageContainer{
+        margin-top: 5px;
+    
+    }
+
+    
+
+}
+
+@media only screen and (max-width: 1100px){
+    .imageContainer{
+        margin-top: 5px;
+    
+    }
+
+    .collectionsTitle{
+        margin-bottom: 0px;
+    }
+
+    .collections{
+        height: 100px;
+        overflow-y: scroll;
+    }
+
+    .arrow{
+        margin: 15px 15px;
+    }
+
+    .automatedLabel{
+        margin-top: 50px;
+    }
+
+    .speedLabel{
+        margin-top: 44px;
+    }
+    .collectionsContainer{
+        width: 100%;
+        text-align: center;
+        display: block;
+        position: relative;
+        margin-top: 15px;
+    }
+    .mainTitle{
+        display: none;
+    }
+
+    .imageContainer{
+        margin-left: 0%;
+        width: 100%;
+    }
+    
+
 }

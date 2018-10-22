@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 
-import {TweenMax, Power2, TimelineLite} from "gsap";
+import {TweenMax} from "gsap";
 
 //Imported models
 import { ArtCollection } from '../../models/ArtCollection';
@@ -26,6 +26,11 @@ export class GallaryComponent implements OnInit {
   fadeInDelay: number;
   collectionToUse: Array<string> = [];
   imgIndex: number;
+  collectionTitles: NodeList;
+
+  @ViewChildren('collectionTitles') things: any;
+
+  
 
   constructor(private artCollectionService: ArtCollectionService) {}
 
@@ -41,16 +46,25 @@ export class GallaryComponent implements OnInit {
     
   }
 
+  ngAfterViewInit() {
+    this.things.changes.subscribe(t => {
+      this.collectionTitles = document.querySelectorAll('.collection');
+        const collectionTitle = this.collectionTitles[0] as HTMLElement;
+        if(collectionTitle){
+          collectionTitle.style.color = "red";      
+        }
+    });
+  }
+
   getArtCollections(): void {
     this.artCollectionService.getArtCollections()
       .subscribe(artCollections => {
         this.artCollections = artCollections;
-        console.log(this.artCollections)
         this.activateCollection('firstRun');
       });   
   }
 
-  activateCollection(e): void {
+  activateCollection(e, index?): void { 
     this.imgIndex = 0;
     if(e === 'firstRun'){
       this.collectionToUse = this.artCollections[0].artCollection;
@@ -62,6 +76,16 @@ export class GallaryComponent implements OnInit {
       const index = parseInt(clickedId.charAt(idTextLength));
       this.collectionToUse = this.artCollections[index].artCollection;
       this.activeImg = this.collectionToUse[this.imgIndex];
+
+      for(let i = 0; i < this.collectionTitles.length; i++){
+        const title = this.collectionTitles[i] as HTMLElement;
+        if(i != index){
+          title.style.color = "black";
+        }else{
+          title.style.color = "red";
+        }
+      }
+     
     }
 
      if(this.activated) this.startAnimation();
@@ -111,7 +135,7 @@ export class GallaryComponent implements OnInit {
         
         break;
       default:
-        break;
+        break; 
     }
 
   }

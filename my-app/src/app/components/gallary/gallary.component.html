@@ -3,8 +3,12 @@
 
   <div class="collectionsContainer">
     <h2 class="collectionsTitle">Kunst collecties:</h2>
-    <div *ngFor="let collection of artCollections; let i = index" class="collections" id="collections">
-      <p class="collection" id='collectionTitle{{i}}' (click)="activateCollection($event)">{{collection.title}}</p>
+    <div 
+      #collectionTitles
+      *ngFor="let collection of artCollections; let i = index" 
+      class="collections" 
+      id="collections">
+      <p class="collection" id='collectionTitle{{i}}' (click)="activateCollection($event, i)">{{collection.title}}</p>
     </div>
     
   </div>

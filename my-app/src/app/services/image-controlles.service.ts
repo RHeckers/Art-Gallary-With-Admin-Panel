@@ -44,7 +44,7 @@ export class ImageControllesService {
     const dropedImgIndex = dropedImg.getAttribute('data-index');
     const holderToDrop = e.target.parentElement;
     const droppedXpost = e.clientX;
-    const droppedYpost = e.clientY - 180;
+    const droppedYpost = e.clientY + 150;
 
     for (let i = 0; i < this.images.length; i++) {
       let insertBefore = this.holders[i] as HTMLElement;
@@ -81,7 +81,7 @@ export class ImageControllesService {
 
       if (
         droppedXpost < first.offsetLeft + first.clientWidth / 2 &&
-        droppedYpost < first.offsetTop
+        droppedYpost < first.offsetTop + 180
       ) {
         container.insertBefore(holderToDrop, insertFirst);
         dropIndex = 0;

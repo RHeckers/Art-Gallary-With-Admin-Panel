@@ -34,10 +34,7 @@ router.post('/addImages', multer({storage: fileStorage}).array("images"), (req, 
     for(let i = 0; i < req.files.length; i++){
         imgPaths.push(url + "/images/" + req.files[i].filename);
     }
-    
     res.status(201).json(imgPaths);
-  
-    
 });
 
 router.post('/', multer({storage: fileStorage}).array("images"), (req, res, next) => {
@@ -58,7 +55,6 @@ router.post('/', multer({storage: fileStorage}).array("images"), (req, res, next
             id: createdCollection._id
         });
     });
-    
 });
 
 router.get('/',(req, res, next) => {
@@ -80,7 +76,6 @@ router.put('/:id', (req, res, next) => {
             res.status(200).json({msg: 'Post Updated!'})
         })
         .catch(err => console.log(err));
-
 });
 
 router.delete('/:id', (req, res, next) => {
