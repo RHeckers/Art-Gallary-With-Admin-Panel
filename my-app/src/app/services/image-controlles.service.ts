@@ -69,14 +69,6 @@ export class ImageControllesService {
           dropIndex = i;
           i = this.images.length;
         }
-
-        console.log(droppedXpost < imgPos &&
-          droppedXpost > prevImgPos + prevImage.clientWidth / 2 &&
-          droppedYpost < imgPosTop,
-          droppedXpost < imgPos ,
-          droppedXpost > prevImgPos + prevImage.clientWidth / 2 ,
-          droppedYpost < imgPosTop,
-          droppedYpost , imgPosTop,)
       }
 
       if (

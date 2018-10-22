@@ -19,35 +19,34 @@ export class GallaryComponent implements OnInit {
 
   activeImg: string;
   displayedImg: HTMLElement;
-  collectionsHolder: HTMLElement;
   activated: boolean;
   artCollections: Array<ArtCollection>;
   delay: number;
-  fadeInDelay: number;
   collectionToUse: Array<string> = [];
   imgIndex: number;
   collectionTitles: NodeList;
 
-  @ViewChildren('collectionTitles') things: any;
-
-  
+  //Watch for changes in the ngFor
+  @ViewChildren('collectionTitles') artCollectionTitltes: any;
 
   constructor(private artCollectionService: ArtCollectionService) {}
 
   ngOnInit() {
+    //Initialize values
     this.delay = 7;
-    this.fadeInDelay = 0.8;
     this.imgIndex = 0;
     this.activated = true;
-    this.collectionsHolder = document.getElementById('collections');
     this.displayedImg = document.getElementById('displayedImg');
     this.displayedImg.style.height = window.innerHeight / 2 + 'px';
+
+    //Get the art collections
     this.getArtCollections();
-    
   }
 
+  //Wait for the view to initialize then subscribe to the viewChildren decorater 
+  //Set the first title to red once the ngFor finished
   ngAfterViewInit() {
-    this.things.changes.subscribe(t => {
+    this.artCollectionTitltes.changes.subscribe(t => {
       this.collectionTitles = document.querySelectorAll('.collection');
         const collectionTitle = this.collectionTitles[0] as HTMLElement;
         if(collectionTitle){
@@ -56,27 +55,31 @@ export class GallaryComponent implements OnInit {
     });
   }
 
-  getArtCollections(): void {
+  //Get the art collections
+  getArtCollections() {
     this.artCollectionService.getArtCollections()
       .subscribe(artCollections => {
         this.artCollections = artCollections;
+        //Active the image carousel
         this.activateCollection('firstRun');
       });   
   }
 
-  activateCollection(e, index?): void { 
-    this.imgIndex = 0;
-    if(e === 'firstRun'){
-      this.collectionToUse = this.artCollections[0].artCollection;
-      this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex]);
-    }else if(e.target){
-      TweenMax.killAll();
-      const clickedId = e.target.attributes['id'].value;
-      const idTextLength = clickedId.length - 1;
-      const index = parseInt(clickedId.charAt(idTextLength));
-      this.collectionToUse = this.artCollections[index].artCollection;
-      this.activeImg = this.collectionToUse[this.imgIndex];
+  //Function to activate the first or a new collection in the gallery 
+  activateCollection(e, index?) { 
 
+    if(e === 'firstRun'){
+      //Activate the first collection
+      this.collectionToUse = this.artCollections[0].artCollection;
+      this.displayedImg.setAttribute('src', this.collectionToUse[0]);
+    }else if(e.target){
+      //Kill all animations
+      TweenMax.killAll();
+      //Get the collection to use and set the active img to the first image of its collection
+      this.collectionToUse = this.artCollections[index].artCollection;
+      this.activeImg = this.collectionToUse[0];
+
+      //Make the clicked title red and the rest black
       for(let i = 0; i < this.collectionTitles.length; i++){
         const title = this.collectionTitles[i] as HTMLElement;
         if(i != index){
@@ -85,13 +88,13 @@ export class GallaryComponent implements OnInit {
           title.style.color = "red";
         }
       }
-     
     }
-
-     if(this.activated) this.startAnimation();
+    //If automated is checked in the front end start animation
+    if(this.activated) this.startAnimation();
 
   }
 
+  //Switch images automaticly
   autoSwitchImg = () => {
     if(this.imgIndex < this.collectionToUse.length - 1){
       this.imgIndex++;
@@ -104,7 +107,8 @@ export class GallaryComponent implements OnInit {
     }, 720);
     
   }
-
+  
+  //Manualy switch images
   manualSwitchImg(direction){
     switch (direction) {
       case "prev":
@@ -118,9 +122,8 @@ export class GallaryComponent implements OnInit {
           this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex])
         }, 850);
         TweenMax.to(this.displayedImg, 1, {delay: 0.95, opacity: 1});
-
-        
         break;
+
       case "next":
         if(this.imgIndex < this.collectionToUse.length - 1){
           this.imgIndex++;
@@ -132,18 +135,16 @@ export class GallaryComponent implements OnInit {
           this.displayedImg.setAttribute('src', this.collectionToUse[this.imgIndex])
         }, 850);
         TweenMax.to(this.displayedImg, 1, {delay: 0.95, opacity: 1});
-        
         break;
-      default:
-        break; 
     }
-
   }
 
+  //Fade out the current image
   startAnimation = () => {
     TweenMax.to(this.displayedImg, 1, {delay: this.delay, opacity: 0, onStart: this.autoSwitchImg});  
   }
 
+  //Get the values from the gallary controlles and assign them
   getInputValue(e): void{
     switch (e.target.id) {
       case "automatedCheckbox":
