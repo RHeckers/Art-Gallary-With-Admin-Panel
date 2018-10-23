@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Imported custom modules
@@ -20,6 +20,7 @@ import { RegisterLoginComponent } from './components/register-login/register-log
 
 //Imported services
 import { ArtCollectionService } from './services/art-collection.service';
+import { AuthInterceptorService } from './services/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { ArtCollectionService } from './services/art-collection.service';
     FormsModule,
     ReactiveFormsModule
   ], 
-  providers: [ArtCollectionService],
+  providers: [ArtCollectionService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

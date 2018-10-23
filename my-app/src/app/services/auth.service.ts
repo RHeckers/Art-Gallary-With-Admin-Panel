@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { AuthData } from '../models/AuthData';
-import { subscribeOn } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -10,12 +10,25 @@ import { subscribeOn } from 'rxjs/operators';
 })
 export class AuthService {
 
-  status: boolean;
+  private token: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
+
+  getToken(){
+    return this.token
+  }
 
   getStatus() {
     return this.http.get<Array<AuthData>>('http://localhost:3000/api/auth');
+  }
+
+  setToken(value){
+    this.token = value;
+  }
+
+  getTokenStatus() {
+    this.getAuthData();
+    return this.http.get<boolean>('http://localhost:3000/api/auth/tokenstatus');
   }
 
   createUser(email: string, password: string){
@@ -26,6 +39,24 @@ export class AuthService {
 
   login(email: string, password: string){
     const authData: AuthData = { email: email, password: password}
-    return this.http.post('http://localhost:3000/api/auth/signin', authData);
+    return this.http.post<{token: string}>('http://localhost:3000/api/auth/signin', authData)
+  }
+
+  logout(){
+    this.token = null;
+    this.router.navigate['/admin'];
+    this.clearAuthData();
+  }
+
+  private getAuthData(){
+    const token = localStorage.getItem('token');
+    if(!token){
+      return
+    }
+    this.token = token;
+  }
+
+  private clearAuthData(){
+    localStorage.removeItem('token');
   }
 }

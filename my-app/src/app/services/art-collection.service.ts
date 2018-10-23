@@ -8,6 +8,8 @@ import { ArtCollection } from './../models/ArtCollection';
 
 //Imported services
 import { ImageControllesService } from './image-controlles.service';
+import { AuthService } from './auth.service';
+
 
 
 
@@ -23,7 +25,8 @@ export class ArtCollectionService {
   //Injections
   constructor(
     private http: HttpClient, 
-    private imgControlles: ImageControllesService
+    private imgControlles: ImageControllesService,
+    private auth: AuthService
     ) { }
 
   //Get the art collections from the backend

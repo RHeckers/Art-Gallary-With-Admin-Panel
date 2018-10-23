@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -11,7 +12,7 @@ export class AdminPanelComponent implements OnInit {
   windowHeight: number;
   auth: boolean;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     if(this.auth){
@@ -19,6 +20,10 @@ export class AdminPanelComponent implements OnInit {
       this.windowHeight = window.innerHeight;
       this.btnHolder.style.marginTop = this.windowHeight / 3.2 + 'px';
     }
+
+    this.authService.getTokenStatus().subscribe(res => {
+      this.auth = res;
+    });
     
   }
 

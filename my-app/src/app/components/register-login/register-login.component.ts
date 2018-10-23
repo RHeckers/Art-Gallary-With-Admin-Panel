@@ -18,7 +18,6 @@ export class RegisterLoginComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getStatus().subscribe(users => {
-      console.log(users.length)
       if(users.length > 0){
         this.formTitle = "LOGIN";
         this.login = true;
@@ -46,9 +45,19 @@ export class RegisterLoginComponent implements OnInit {
       return;
     }
     this.authService.login(email, password).subscribe(response => {
-      if(response) this.logedIn.emit(true);
+      if(response) {
+        this.logedIn.emit(true);
+        const token = response.token;
+        this.authService.setToken(token)
+        this.saveAuthData(token);
+      };
+
     });
         
+  }
+
+  private saveAuthData(token: string){
+    localStorage.setItem('token', token);
   }
 
 }

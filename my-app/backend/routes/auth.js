@@ -1,6 +1,7 @@
 const express = require('express');
 const passwordHash = require('password-hash');
 const jwt = require('jsonwebtoken');
+const checkAuth = require('../middleware/check-auth');
 
 const User = require('../models/user');
 
@@ -44,7 +45,7 @@ router.post("/signin", (req, res, next) => {
                 {expiresIn: '1h'});
             
             console.log(token);
-            res.status(200).json({msg: "signed in", token: token});
+            res.status(200).json({token: token});
         })
         .catch(err => res.status(500).json({msg: 'Something went wrong!', err: err}));
 });
@@ -54,6 +55,10 @@ router.get('/',(req, res, next) => {
       .then(collections => {
           res.status(200).json(collections);
       });
+});
+
+router.get('/tokenstatus', checkAuth, (req, res, next) => {
+    res.status(200).json(true);
 });
 
 
