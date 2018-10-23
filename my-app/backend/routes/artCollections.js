@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const ArtCollection = require('../models/artCollection');
+const checkAuth = require('../middleware/check-auth');
 
 const MIME_TYPE_MAP = {
     'image/png': 'png',
@@ -25,7 +26,7 @@ const fileStorage = multer.diskStorage({
     }
 });
 
-router.post('/addImages', multer({storage: fileStorage}).array("images"), (req, res, next) => {
+router.post('/addImages', checkAuth, multer({storage: fileStorage}).array("images"), (req, res, next) => {
     console.log(req.files);
     const url = req.protocol + "://" + req.get("host");
     const imgPaths = []
@@ -35,7 +36,7 @@ router.post('/addImages', multer({storage: fileStorage}).array("images"), (req, 
     res.status(201).json(imgPaths);
 });
 
-router.post('/', multer({storage: fileStorage}).array("images"), (req, res, next) => {
+router.post('/', checkAuth, multer({storage: fileStorage}).array("images"), (req, res, next) => {
     console.log(req.files);
     const url = req.protocol + "://" + req.get("host");
     const imgPaths = []
@@ -62,7 +63,7 @@ router.get('/',(req, res, next) => {
       });
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', checkAuth, (req, res, next) => {
     const newCollection = new ArtCollection({
         _id: req.body.id,
         title: req.body.title,
@@ -76,7 +77,7 @@ router.put('/:id', (req, res, next) => {
         .catch(err => console.log(err));
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkAuth, (req, res, next) => {
     ArtCollection.deleteOne({_id: req.params.id})
       .then(result => {
         console.log(result['artCollection']);

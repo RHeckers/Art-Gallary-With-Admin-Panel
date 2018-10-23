@@ -1,7 +1,6 @@
 const express = require('express');
 const passwordHash = require('password-hash');
-var jwt = require('jsonwebtoken');
-
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 

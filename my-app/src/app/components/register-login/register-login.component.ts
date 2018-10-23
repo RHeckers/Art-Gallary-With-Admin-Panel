@@ -33,7 +33,12 @@ export class RegisterLoginComponent implements OnInit {
     if(!email && !password && !email.includes('@')){
       return;
     }
-    this.authService.createUser(email, password);
+    this.authService.createUser(email, password).subscribe(res =>{
+      console.log(res)
+      this.formTitle = "LOGIN";
+      this.login = true;
+    });;
+
   }
  
   onLogin(email: string, password: string){
