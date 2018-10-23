@@ -37,10 +37,11 @@
     <h3 class="label">Preview Titlte: <p class="bold-uppercase-inline">{{collectionTitle}}</p></h3>
 
     <p class="label">Images preview  (drag & drop to change order):</p>
-    <div class="previewImages"id="previewImages">
-      <div *ngFor="let image of imagePreviews; let i = index" class="imgHolder">
+    <div class="previewImages"id="previewImages" (dragover)="allowDrop($event)">
+      <div *ngFor="let image of imagePreviews; let i = index" class="imgHolder" (dragover)="allowDrop($event)">
           <img  
-          [src]="image" 
+          draggable="true"
+          [src]="image"  
           (dragend)="swapImg($event)"
           class="previewImg" 
           alt=""
