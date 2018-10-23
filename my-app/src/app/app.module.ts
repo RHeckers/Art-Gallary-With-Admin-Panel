@@ -3,9 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
-
-
 //Imported custom modules
 import { AppRoutingModule } from './app-routing.module';
 
@@ -14,14 +11,16 @@ import { AppComponent } from './app.component';
 import { GallaryComponent } from './components/gallary/gallary.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
-
-//Imported services
-import { ArtCollectionService } from './services/art-collection.service';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AddCollectionComponent } from './components/add-collection/add-collection.component';
 import { EditCollectionComponent } from './components/edit-collection/edit-collection.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RegisterLoginComponent } from './components/register-login/register-login.component';
  
+
+//Imported services
+import { ArtCollectionService } from './services/art-collection.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +29,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     FooterComponent, 
     AdminPanelComponent, 
     AddCollectionComponent, 
-    EditCollectionComponent, NotFoundComponent
+    EditCollectionComponent, 
+    NotFoundComponent, 
+    RegisterLoginComponent
   ],
   imports: [
     AppRoutingModule,

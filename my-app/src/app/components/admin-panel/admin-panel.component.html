@@ -10,8 +10,14 @@
 </div> -->
 
 <div class="container">
-  <div class="btnHolder" id="btnHolder">
-      <button routerLink="/edit-collection" class="editBtn btn">EDIT A COLLECTION</button>
-      <button routerLink="/add-collection" class="addBtn btn">ADD A COLLECTION</button>
-  </div>  
+
+  <app-register-login (logedIn)="logedIn($event)" *ngIf="!auth ;else guest"></app-register-login>
+
+  <ng-template #guest>
+      <div class="btnHolder" id="btnHolder">
+          <button routerLink="/edit-collection" class="editBtn btn">EDIT A COLLECTION</button>
+          <button routerLink="/add-collection" class="addBtn btn">ADD A COLLECTION</button>
+      </div>  
+  </ng-template> 
+  
 </div>  

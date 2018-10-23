@@ -3,11 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const mongoose = require('mongoose');
-const router = require('./routes/artCollections');
+
+const artCollectionRoutes = require('./routes/artCollections');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://rheckers:B83bWrT4DII2I1q0@cluster0-uidwd.mongodb.net/art-gallary?retryWrites=true', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://rheckers:B83bWrT4DII2I1q0@cluster0-uidwd.mongodb.net/art-gallary?retryWitres="true"', { useNewUrlParser: true })
  .then(() => {
      console.log('Connected to database!')
  })
@@ -28,7 +30,8 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-app.use('/api/artCollections', router)
+app.use('/api/artCollections', artCollectionRoutes);
+app.use('/api/auth', authRoutes);
 
 
 module.exports = app;

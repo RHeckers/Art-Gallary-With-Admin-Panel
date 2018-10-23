@@ -9,13 +9,23 @@ export class AdminPanelComponent implements OnInit {
 
   btnHolder: HTMLElement;
   windowHeight: number;
+  auth: boolean;
 
   constructor() { }
 
   ngOnInit() {
-    this.btnHolder = document.getElementById('btnHolder');
-    this.windowHeight = window.innerHeight;
-    this.btnHolder.style.marginTop = this.windowHeight / 3.2 + 'px';
+    if(this.auth){
+      this.btnHolder = document.getElementById('btnHolder');
+      this.windowHeight = window.innerHeight;
+      this.btnHolder.style.marginTop = this.windowHeight / 3.2 + 'px';
+    }
+    
+  }
+
+  logedIn(logedIn){
+    this.auth = logedIn;
+    console.log(logedIn);
+
   }
 
 }

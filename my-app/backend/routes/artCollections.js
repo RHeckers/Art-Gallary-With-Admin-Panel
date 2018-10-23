@@ -1,6 +1,4 @@
-const path = require('path');
 const express = require('express');
-const bodyParser = require('body-parser');
 const multer = require('multer');
 const router = express.Router();
 const ArtCollection = require('../models/artCollection');

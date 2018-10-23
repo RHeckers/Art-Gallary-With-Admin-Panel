@@ -1,0 +1,12 @@
+<h1>{{formTitle}}</h1>
+
+<label  for="email">Email:</label>
+<input #email type="email">
+    
+<label for="password">Password:</label>
+<input #password type="password">
+
+<button *ngIf="!login" (click)="onSignUp(email.value, password.value)">{{formTitle}}</button>
+<button *ngIf="login" (click)="onLogin(email.value, password.value)">{{formTitle}}</button>
+
+
