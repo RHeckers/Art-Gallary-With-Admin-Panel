@@ -116,7 +116,6 @@ export class EditCollectionComponent implements OnInit {
   }
   //Remove images inside the preview
   removeImg(index, array){
-    console.log(this.previewFiles, array)
     this.imgControlles.removeImg(array, index);
   }
   //Delete a collection
