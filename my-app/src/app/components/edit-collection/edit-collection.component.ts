@@ -1,3 +1,4 @@
+import { GlobalServiceService } from './../../services/global-service.service';
 import { async } from '@angular/core/testing';
 import { ImageControllesService } from './../../services/image-controlles.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,7 +22,8 @@ export class EditCollectionComponent implements OnInit {
   //Inject services
   constructor(
     private artCollectionService: ArtCollectionService, 
-    private imgControlles: ImageControllesService
+    private imgControlles: ImageControllesService,
+    private globalService: GlobalServiceService
     ) { }
 
   //Hide footer and get artCollections
@@ -32,15 +34,17 @@ export class EditCollectionComponent implements OnInit {
 
   //Function to get artCollection from the artCollection service
   getArtCollections(): void {
+    this.globalService.setLoader(true);
     this.artCollectionService.getArtCollections()
       .subscribe(artCollections => {
         this.artCollections = artCollections;
+        this.globalService.setLoader(false);
       });
   }
 
   allowDrop(ev) {
     ev.preventDefault();
-}
+  }
 
   //Function to start editing an art collection
   startEdit(e, index){
@@ -70,6 +74,7 @@ export class EditCollectionComponent implements OnInit {
 
   //Function to update the art collection
   updateCollection(e, index, title, id){
+    this.globalService.setLoader(true);
     //Create a new object with the updated values
     const updatedCollection = {
       id: id,
@@ -85,7 +90,9 @@ export class EditCollectionComponent implements OnInit {
   }
 
   //Function to add images to the update preview
-  addImages(e, index){    
+  addImages(e, index){   
+    this.globalService.setLoader(true);
+     
     this.previewFiles = [];
     this.imagePreviews = [];
     this.imgControlles.previewFiles = [];
@@ -100,13 +107,14 @@ export class EditCollectionComponent implements OnInit {
     //The real URL's will be stored in this.imgControlles.newImgPaths inside the service
     this.imgControlles.uploadImages(this.previewFiles);
 
-    //Set timeout is a temp fix
+    //Set timeout is a temp fix for async file reader
     setTimeout(() => {
       //Set the artCollection array of the corresponding art Collection
       //Equal to a copy of the current aray + a coppy of the imagesPreviews
       //This way the temp URL's will be rendered in the ngFor
+      this.globalService.setLoader(false);
       this.artCollections[index].artCollection = [...this.artCollections[index].artCollection, ...this.imagePreviews];
-    }, 100);
+    }, 500);
   }
 
   //Swap images inside the preview
@@ -120,6 +128,7 @@ export class EditCollectionComponent implements OnInit {
   }
   //Delete a collection
   deleteCollection(collectionId, el){
+    this.globalService.setLoader(true);
     el.remove();
     this.artCollectionService.deleteArtCollection(collectionId);
   }

@@ -1,3 +1,4 @@
+import { GlobalServiceService } from './global-service.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
@@ -26,7 +27,8 @@ export class ArtCollectionService {
   constructor(
     private http: HttpClient, 
     private imgControlles: ImageControllesService,
-    private auth: AuthService
+    private auth: AuthService,
+    private globalService: GlobalServiceService
     ) { }
 
   //Get the art collections from the backend
@@ -93,12 +95,18 @@ export class ArtCollectionService {
     }
     //Make the put request to update the collection
     this.http.put('http://localhost:3000/api/artCollections/' + collection.id, updatedCollection)
-      .subscribe(res => console.log(res));
+      .subscribe(res => {
+        console.log(res);
+        this.globalService.setLoader(false);
+      });
   }
   //Delete an art collection
   deleteArtCollection(collectionId: string){
     this.http.delete('http://localhost:3000/api/artCollections/' + collectionId)
-     .subscribe(() => console.log("Collection deleted!"));
+     .subscribe(() => {
+       this.globalService.setLoader(false);
+       console.log("Collection deleted!")
+      });
   }
 
 }
