@@ -97,12 +97,9 @@ export class ImageControllesService {
   }
 
   removeImg(arrayOne, index, arrayTwo?) {
-    console.log(arrayOne, arrayTwo);
     arrayOne.splice(index, 1);
     if(arrayTwo){
       arrayTwo.splice(index, 1);  
     }
-    console.log(arrayOne, arrayTwo);
-    
   }
 }
