@@ -41,7 +41,7 @@
               class="collectionImg previewImg" 
               alt=""
               [attr.data-index]="i"> 
-              <p class="removeImg" [attr.data-index]="i" (click)="removeImg($event, collection.artCollection)">X</p>
+              <p class="removeImg" [attr.data-index]="i" (click)="removeImg(i, collection.artCollection)">X</p>
           </div>
       </div>
       <button class="imgInputBtn" (click)="updateCollection($event, i, titleInput.value, collection.id)">CONFIRM CHANGES</button> 

@@ -82,6 +82,10 @@ export class EditCollectionComponent implements OnInit {
 
   //Function to add images to the update preview
   addImages(e, index){    
+    this.previewFiles = [];
+    this.imagePreviews = [];
+    this.imgControlles.previewFiles = [];
+    this.imgControlles.imagePreviews = [];
     //First use the newly added files to get temp URL's and files
     let files = this.imgControlles.getPreviewImages(e.target.files); 
     //Save the corresponding key value pairs to previewFiles and imagePreviews
@@ -107,8 +111,9 @@ export class EditCollectionComponent implements OnInit {
     this.imgControlles.dropImg(e, this.imgHolder, collection); 
   }
   //Remove images inside the preview
-  removeImg(e, array){
-    this.imgControlles.removeImg(e, array);
+  removeImg(index, array){
+    console.log(this.previewFiles, array)
+    this.imgControlles.removeImg(array, index);
   }
   //Delete a collection
   deleteCollection(collectionId, el){

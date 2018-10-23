@@ -83,7 +83,9 @@ export class AddCollectionComponent implements OnInit {
   }
 
   //Function to remove the images from the preview
-  removeImg(e){
-    this.imgControlles.removeImg(e, this.previewFiles);    
+  removeImg(index, imgUrl){
+    this.imgControlles.removeImg(this.previewFiles, this.imagePreviews, index); 
+    console.log(this.previewFiles, this.imagePreviews) 
+      
   }
 }

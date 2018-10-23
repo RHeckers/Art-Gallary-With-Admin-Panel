@@ -96,11 +96,13 @@ export class ImageControllesService {
 
   }
 
-  removeImg(e, array?) {
-    this.holders = document.querySelectorAll(".imgHolder");
-    const indexToDelete = e.target.attributes["data-index"]["value"];
-    let elementToRemove = this.holders[indexToDelete] as HTMLElement;
-    elementToRemove.style.display = "none";
-    array.splice(indexToDelete, 1);
+  removeImg(arrayOne, index, arrayTwo?) {
+    console.log(arrayOne, arrayTwo);
+    arrayOne.splice(index, 1);
+    if(arrayTwo){
+      arrayTwo.splice(index, 1);  
+    }
+    console.log(arrayOne, arrayTwo);
+    
   }
 }
