@@ -27,7 +27,7 @@ export class ImageControllesService {
       };
       reader.readAsDataURL(uploadedImg);
     }
-
+    this.globalService.setLoader(false);
     return { previewFiles: this.previewFiles, imagePreviews: this.imagePreviews};
   }
 

@@ -40,6 +40,7 @@ export class AddCollectionComponent implements OnInit {
 
   //Function to add a collection and empty the form
   addCollection(){
+    this.globalService.setLoader(true);
     //Check if there is a title and images in the upload preivew
     if(this.collectionTitle && this.previewFiles != []){
       this.artCollectionService.addArtCollection(this.collectionTitle, this.previewFiles); 
@@ -60,13 +61,16 @@ export class AddCollectionComponent implements OnInit {
         this.globalService.insertError(
           'Title needs to be between 3 and 25 characters', 
           this.titleInput);
+        this.globalService.setLoader(false);
     }
     //If there are no images to upload with the collection insert an error message
     if(this.previewFiles == []){
       this.globalService.insertError(
         'There needs to be at least one picture in the collection', 
         this.previewHeader);
+      this.globalService.setLoader(false);
     } 
+
   }
 
   allowDrop(ev) {
@@ -75,6 +79,7 @@ export class AddCollectionComponent implements OnInit {
 
   //Function to add new images to the preview
   getPreviewImages(e){
+    this.globalService.setLoader(true);
     //Send the files to the service and get back the files and temp paths
     let files = this.imgControlles.getPreviewImages(e.target.files);
     //Assign the previewFiles and imagePrevies with the corresponding key value pairs 

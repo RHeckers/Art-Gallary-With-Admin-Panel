@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { GlobalServiceService } from '../../services/global-service.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -12,15 +13,17 @@ export class AdminPanelComponent implements OnInit {
   windowHeight: number;
   auth: boolean;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private globalService: GlobalServiceService) { }
 
   ngOnInit() {
+    this.globalService.setLoader(true);
     this.authService.getTokenStatus().subscribe(res => {
-      this.auth = res;
+      this.auth = res;     
     }); 
   }
 
   ngAfterViewChecked(){
+    this.globalService.setLoader(false); 
     if(this.auth){
       this.placeBtns();
     }
@@ -35,7 +38,6 @@ export class AdminPanelComponent implements OnInit {
   logedIn(logedIn){
     this.auth = logedIn;
     console.log(logedIn);
-
   }
 
 }

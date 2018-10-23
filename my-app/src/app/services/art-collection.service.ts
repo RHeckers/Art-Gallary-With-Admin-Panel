@@ -68,6 +68,7 @@ export class ArtCollectionService {
       const newCollection = {id: res.id, title: title, artCollection: res.artCollection}
       this.artCollections.unshift(newCollection);
       this.updatedCollections.next([...this.artCollections]);
+      this.globalService.setLoader(false);
     });
   }
 
