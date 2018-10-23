@@ -15,16 +15,21 @@ export class AdminPanelComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    if(this.auth){
-      this.btnHolder = document.getElementById('btnHolder');
-      this.windowHeight = window.innerHeight;
-      this.btnHolder.style.marginTop = this.windowHeight / 3.2 + 'px';
-    }
-
     this.authService.getTokenStatus().subscribe(res => {
       this.auth = res;
-    });
-    
+    }); 
+  }
+
+  ngAfterViewChecked(){
+    if(this.auth){
+      this.placeBtns();
+    }
+  }
+
+  placeBtns(){
+    this.btnHolder = document.getElementById('btnHolder');
+    this.windowHeight = window.innerHeight;
+    this.btnHolder.style.marginTop = this.windowHeight / 3.2 + 'px';
   }
 
   logedIn(logedIn){
