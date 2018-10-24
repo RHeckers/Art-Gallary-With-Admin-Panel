@@ -27,12 +27,14 @@
     "core-js": "^2.5.4",
     "express": "^4.16.4",
     "greensock": "^1.20.2",
+    "gsap": "^2.0.2",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.4",
     "mongoose-unique-validator": "^2.0.2",
     "multer": "^1.4.1",
     "password-hash": "^1.2.2",
     "rxjs": "~6.2.0",
+    "save": "^2.3.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
