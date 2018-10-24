@@ -65,7 +65,6 @@ router.get('/',(req, res, next) => {
 });
 
 router.put('/:id', checkAuth, (req, res, next) => {
-    let collectionUrls = [];
     let newCollection = req.body.artCollection;
 
     const newCollectionObj = new ArtCollection({
@@ -122,9 +121,9 @@ router.delete('/:id', checkAuth, (req, res, next) => {
     });
     
 
-}).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the collection!'}));;
+   }).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the collection!'}));;
 
-   })
+});
 
         
    
