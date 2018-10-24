@@ -27,7 +27,7 @@ export class GlobalServiceService {
         break;
       case false:
         const loader = document.querySelector('.loader');
-        loader.remove();
+        if(loader) loader.remove();
         
         break;
     }

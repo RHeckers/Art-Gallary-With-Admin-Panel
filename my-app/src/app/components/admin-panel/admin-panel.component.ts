@@ -16,7 +16,7 @@ export class AdminPanelComponent implements OnInit {
   constructor(private authService: AuthService, private globalService: GlobalServiceService) { }
 
   ngOnInit() {
-    this.globalService.setLoader(true);
+    // this.globalService.setLoader(true);
     this.authService.getTokenStatus().subscribe(res => {
       this.auth = res;     
     }); 

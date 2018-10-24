@@ -122,8 +122,7 @@
     }
 
     .collections{
-        height: 100px;
-        overflow-y: scroll;
+        height: 15px;
     }
 
     .arrow{
