@@ -18,12 +18,7 @@ const fileStorage = multer.diskStorage({
         if(isValid){
             error = null;
         }
-        //make directory for collection, if directory does not already exist
-        const dir = "backend/images/" +req.body.title + "/";
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir);
-        }
-        cb(error,dir);
+        cb(error, "backend/images");
     },
     filename: (req, file, cb) => {
         const name = file.originalname.toLowerCase().split(' ').join('-');
@@ -37,7 +32,7 @@ router.post('/addImages', checkAuth, multer({storage: fileStorage}).array("image
     const url = req.protocol + "://" + req.get("host");
     const imgPaths = []
     for(let i = 0; i < req.files.length; i++){
-        imgPaths.push(url + "/images/" +req.body.title + "/"+ req.files[i].filename);
+        imgPaths.push(url + "/images/" + req.files[i].filename);
     }
     res.status(201).json(imgPaths);
 });
@@ -47,7 +42,7 @@ router.post('/', checkAuth, multer({storage: fileStorage}).array("images"), (req
     const url = req.protocol + "://" + req.get("host");
     const imgPaths = []
     for(let i = 0; i < req.files.length; i++){
-        imgPaths.push(url + "/images/" + req.body.title + "/"+ req.files[i].filename);
+        imgPaths.push(url + "/images/" + req.files[i].filename);
     }
     const artcollection = new ArtCollection({
         title: req.body.title,
@@ -75,6 +70,29 @@ router.put('/:id', checkAuth, (req, res, next) => {
         title: req.body.title,
         artCollection: req.body.artCollection
     })
+
+    //Delete files from backend
+    // const oldCollection = ArtCollection.findById();
+    
+    ArtCollection.findOne({_id: req.params.id}, function (err, doc) {
+        doc['artCollection'].forEach((filename ) => {
+            if(!newCollection['artCollection'].includes(filename)){
+                var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
+                fs.unlink(filepath, (error) => 
+                    {
+                        if (error) {
+                            throw(error);
+                                }
+                    console.log('Deleted filename', filepath);
+                    }
+                    )
+            }
+        })
+        if (err) return handleError(err);       
+    } );
+
+
+
     ArtCollection.updateOne({_id: req.params.id}, newCollection)
         .then(result => {
             console.log(result)
@@ -84,6 +102,24 @@ router.put('/:id', checkAuth, (req, res, next) => {
 });
 
 router.delete('/:id', checkAuth, (req, res, next) => {
+    //delete image file in backend
+    ArtCollection.findOne({_id: req.params.id}, function (err, doc) {
+        doc['artCollection'].forEach((filename ) => {        
+        var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
+        fs.unlink(filepath, (error) => 
+            {
+                if (error) {
+                    throw(error);
+                           }
+            console.log('Deleted filename', filepath);
+            }
+            ) 
+
+    if (err) return handleError(err);       
+    } )})
+
+    //delete image in mongodb
+    
     ArtCollection.deleteOne({_id: req.params.id})
       .then(result => {
         console.log(result['artCollection']);
