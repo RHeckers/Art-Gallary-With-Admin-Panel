@@ -64,28 +64,49 @@ router.get('/',(req, res, next) => {
 });
 
 router.put('/:id', checkAuth, (req, res, next) => {
-    const newCollection = new ArtCollection({
-        _id: req.body.id,
-        title: req.body.title,
-        artCollection: req.body.artCollection
+    let collectionUrls = [];
+    let newCollection = []
+    ArtCollection.findOne({_id: req.params.id}).then(collection =>{
+        collectionUrls = collection.artCollection;
+        for(let i = 0; i < collectionUrls.length; i++){
+            newCollection = req.body.artCollection;
+            let index = newCollection.indexOf(collectionUrls[i]);
+            if(index == -1){
+                const imageToRemove = collectionUrls[i];
+                console.log("image To Remove: ",imageToRemove)
+            }
+            
+        }      
     })
-    ArtCollection.updateOne({_id: req.params.id}, newCollection)
+
+    const newCollectionObj = new ArtCollection({
+            _id: req.body.id,
+            title: req.body.title,
+            artCollection: newCollection
+    })
+    ArtCollection.updateOne({_id: req.params.id}, newCollectionObj)
         .then(result => {
             console.log(result)
             res.status(200).json({msg: 'Post Updated!'})
         })
         .catch(err => console.log(err));
+        
+    
 });
 
 router.delete('/:id', checkAuth, (req, res, next) => {
     let collectionUrls = [];
     ArtCollection.findOne({_id: req.params.id}).then(collection =>{
         collectionUrls = collection.artCollection;
+
+        //Delete images from file system below
+        console.log(collectionUrls)
+
     }).then(() => {
         ArtCollection.deleteOne({_id: req.params.id})
       .then(result => {
-        //Delete images from file system below
-
+        
+        
         res.status(200).json({msg: "Post deleted!"})
       })
       .catch(err => res.status(400).json({ msg: 'Something went wrong deleting the user!'}));
