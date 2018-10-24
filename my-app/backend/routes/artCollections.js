@@ -71,9 +71,7 @@ router.put('/:id', checkAuth, (req, res, next) => {
         artCollection: req.body.artCollection
     })
 
-    //Delete files from backend
-    // const oldCollection = ArtCollection.findById();
-    
+    //Delete files from backend  
     ArtCollection.findOne({_id: req.params.id}, function (err, doc) {
         doc['artCollection'].forEach((filename ) => {
             if(!newCollection['artCollection'].includes(filename)){
@@ -103,29 +101,37 @@ router.put('/:id', checkAuth, (req, res, next) => {
 
 router.delete('/:id', checkAuth, (req, res, next) => {
     //delete image file in backend
-    ArtCollection.findOne({_id: req.params.id}, function (err, doc) {
-        doc['artCollection'].forEach((filename ) => {        
-        var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
-        fs.unlink(filepath, (error) => 
-            {
-                if (error) {
-                    throw(error);
-                           }
-            console.log('Deleted filename', filepath);
-            }
-            ) 
-
-    if (err) return handleError(err);       
-    } )})
-
+    ArtCollection.findOne({_id: req.params.id})
+    .then(doc => {
+        doc['artCollection'].forEach((filename ) => {           
+                var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
+                fs.unlink(filepath, (error) => 
+                    {
+                        if (error) {
+                            throw(error);
+                                }
+                    console.log('Deleted filename', filepath);
+                    }
+                    )
+                    })
+        return req.params.id
+    })                 
+   .then(result =>{
     //delete image in mongodb
+    ArtCollection.deleteOne({_id: result})
+    .then(result => {
+      console.log('result artcol',result['artCollection']);
+      res.status(200).json({msg: "Post deleted!"})
+    })
     
-    ArtCollection.deleteOne({_id: req.params.id})
-      .then(result => {
-        console.log(result['artCollection']);
-        res.status(200).json({msg: "Post deleted!"})
-      })
-      .catch(err => res.status(400).json({ msg: 'Something went wrong deleting the user!'}));
-});
+
+}).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the collection!'}));;
+
+   })
+
+        
+   
+    
+    
 
 module.exports = router;
