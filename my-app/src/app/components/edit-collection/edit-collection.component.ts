@@ -90,9 +90,7 @@ export class EditCollectionComponent implements OnInit {
   }
 
   //Function to add images to the update preview
-  addImages(e, index){   
-    this.globalService.setLoader(true);
-     
+  addImages(e, index){        
     this.previewFiles = [];
     this.imagePreviews = [];
     this.imgControlles.previewFiles = [];
@@ -107,12 +105,13 @@ export class EditCollectionComponent implements OnInit {
     //The real URL's will be stored in this.imgControlles.newImgPaths inside the service
     this.imgControlles.uploadImages(this.previewFiles);
 
+    this.globalService.setLoader(true);
     //Set timeout is a temp fix for async file reader
     setTimeout(() => {
+      this.globalService.setLoader(false);
       //Set the artCollection array of the corresponding art Collection
       //Equal to a copy of the current aray + a coppy of the imagesPreviews
       //This way the temp URL's will be rendered in the ngFor
-      this.globalService.setLoader(false);
       this.artCollections[index].artCollection = [...this.artCollections[index].artCollection, ...this.imagePreviews];
     }, 500);
   }
