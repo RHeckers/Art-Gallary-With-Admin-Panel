@@ -78,12 +78,19 @@ router.put('/:id', checkAuth, (req, res, next) => {
 });
 
 router.delete('/:id', checkAuth, (req, res, next) => {
-    ArtCollection.deleteOne({_id: req.params.id})
+    let collectionUrls = [];
+    ArtCollection.findOne({_id: req.params.id}).then(collection =>{
+        collectionUrls = collection.artCollection;
+    }).then(() => {
+        ArtCollection.deleteOne({_id: req.params.id})
       .then(result => {
-        console.log(result['artCollection']);
+        //Delete images from file system below
+
         res.status(200).json({msg: "Post deleted!"})
       })
       .catch(err => res.status(400).json({ msg: 'Something went wrong deleting the user!'}));
+
+    }).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the user!'}));
 });
 
 module.exports = router;
