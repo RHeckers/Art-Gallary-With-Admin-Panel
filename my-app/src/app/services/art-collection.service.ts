@@ -94,6 +94,8 @@ export class ArtCollectionService {
       title: collection.title,
       artCollection: images
     }
+
+    
     //Make the put request to update the collection
     this.http.put('http://localhost:3000/api/artCollections/' + collection.id, updatedCollection)
       .subscribe(res => {

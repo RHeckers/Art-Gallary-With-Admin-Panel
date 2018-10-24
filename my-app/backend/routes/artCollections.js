@@ -3,6 +3,7 @@ const multer = require('multer');
 const router = express.Router();
 const ArtCollection = require('../models/artCollection');
 const checkAuth = require('../middleware/check-auth');
+const fs = require('fs');
 
 const MIME_TYPE_MAP = {
     'image/png': 'png',
@@ -84,7 +85,28 @@ router.put('/:id', checkAuth, (req, res, next) => {
             title: req.body.title,
             artCollection: newCollection
     })
-    ArtCollection.updateOne({_id: req.params.id}, newCollectionObj)
+
+    //Delete files from backend  
+    ArtCollection.findOne({_id: req.params.id}, function (err, doc) {
+        doc['artCollection'].forEach((filename ) => {
+            if(!newCollection['artCollection'].includes(filename)){
+                var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
+                fs.unlink(filepath, (error) => 
+                    {
+                        if (error) {
+                            throw(error);
+                                }
+                    console.log('Deleted filename', filepath);
+                    }
+                    )
+            }
+        })
+        if (err) return handleError(err);       
+    } );
+
+
+
+    ArtCollection.updateOne({_id: req.params.id}, newCollection)
         .then(result => {
             console.log(result)
             res.status(200).json({msg: 'Post Updated!'})
@@ -95,23 +117,38 @@ router.put('/:id', checkAuth, (req, res, next) => {
 });
 
 router.delete('/:id', checkAuth, (req, res, next) => {
-    let collectionUrls = [];
-    ArtCollection.findOne({_id: req.params.id}).then(collection =>{
-        collectionUrls = collection.artCollection;
+    //delete image file in backend
+    ArtCollection.findOne({_id: req.params.id})
+    .then(doc => {
+        doc['artCollection'].forEach((filename ) => {           
+                var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
+                fs.unlink(filepath, (error) => 
+                    {
+                        if (error) {
+                            throw(error);
+                                }
+                    console.log('Deleted filename', filepath);
+                    }
+                    )
+                    })
+        return req.params.id
+    })                 
+   .then(result =>{
+    //delete image in mongodb
+    ArtCollection.deleteOne({_id: result})
+    .then(result => {
+      console.log('result artcol',result['artCollection']);
+      res.status(200).json({msg: "Post deleted!"})
+    })
+    
 
-        //Delete images from file system below
-        console.log(collectionUrls)
+}).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the collection!'}));;
 
-    }).then(() => {
-        ArtCollection.deleteOne({_id: req.params.id})
-      .then(result => {
+   })
+
         
-        
-        res.status(200).json({msg: "Post deleted!"})
-      })
-      .catch(err => res.status(400).json({ msg: 'Something went wrong deleting the user!'}));
-
-    }).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the user!'}));
-});
+   
+    
+    
 
 module.exports = router;
