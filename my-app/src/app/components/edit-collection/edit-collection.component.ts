@@ -83,10 +83,13 @@ export class EditCollectionComponent implements OnInit {
     }
     //Set the collection to the updated values to display it in the front end
     this.artCollections[index] = updatedCollection;
+
+    //Remove images from storage
     
     //Send the updated collection to the service
     this.artCollectionService.updateArtCollection(updatedCollection);
     this.closeEdit();
+
   }
 
   //Function to add images to the update preview

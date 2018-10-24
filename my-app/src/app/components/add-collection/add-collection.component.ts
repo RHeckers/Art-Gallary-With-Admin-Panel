@@ -86,6 +86,7 @@ export class AddCollectionComponent implements OnInit {
     // from the returned object
     this.previewFiles = files['previewFiles'];
     this.imagePreviews = files['imagePreviews'];
+    console.log("previews:",this.previewFiles,this.imagePreviews);
   }
 
   //Function to swap the images in the preview

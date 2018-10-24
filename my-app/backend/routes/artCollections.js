@@ -3,6 +3,7 @@ const multer = require('multer');
 const router = express.Router();
 const ArtCollection = require('../models/artCollection');
 const checkAuth = require('../middleware/check-auth');
+const fs = require('fs');
 
 const MIME_TYPE_MAP = {
     'image/png': 'png',
@@ -17,7 +18,12 @@ const fileStorage = multer.diskStorage({
         if(isValid){
             error = null;
         }
-        cb(error, "backend/images");
+        //make directory for collection, if directory does not already exist
+        const dir = "backend/images/" +req.body.title + "/";
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
+        cb(error,dir);
     },
     filename: (req, file, cb) => {
         const name = file.originalname.toLowerCase().split(' ').join('-');
@@ -31,7 +37,7 @@ router.post('/addImages', checkAuth, multer({storage: fileStorage}).array("image
     const url = req.protocol + "://" + req.get("host");
     const imgPaths = []
     for(let i = 0; i < req.files.length; i++){
-        imgPaths.push(url + "/images/" + req.files[i].filename);
+        imgPaths.push(url + "/images/" +req.body.title + "/"+ req.files[i].filename);
     }
     res.status(201).json(imgPaths);
 });
@@ -41,7 +47,7 @@ router.post('/', checkAuth, multer({storage: fileStorage}).array("images"), (req
     const url = req.protocol + "://" + req.get("host");
     const imgPaths = []
     for(let i = 0; i < req.files.length; i++){
-        imgPaths.push(url + "/images/" + req.files[i].filename);
+        imgPaths.push(url + "/images/" + req.body.title + "/"+ req.files[i].filename);
     }
     const artcollection = new ArtCollection({
         title: req.body.title,
