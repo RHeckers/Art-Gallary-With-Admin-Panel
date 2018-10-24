@@ -66,19 +66,7 @@ router.get('/',(req, res, next) => {
 
 router.put('/:id', checkAuth, (req, res, next) => {
     let collectionUrls = [];
-    let newCollection = []
-    ArtCollection.findOne({_id: req.params.id}).then(collection =>{
-        collectionUrls = collection.artCollection;
-        for(let i = 0; i < collectionUrls.length; i++){
-            newCollection = req.body.artCollection;
-            let index = newCollection.indexOf(collectionUrls[i]);
-            if(index == -1){
-                const imageToRemove = collectionUrls[i];
-                console.log("image To Remove: ",imageToRemove)
-            }
-            
-        }      
-    })
+    let newCollection = req.body.artCollection;
 
     const newCollectionObj = new ArtCollection({
             _id: req.body.id,
@@ -87,26 +75,22 @@ router.put('/:id', checkAuth, (req, res, next) => {
     })
 
     //Delete files from backend  
-    ArtCollection.findOne({_id: req.params.id}, function (err, doc) {
-        doc['artCollection'].forEach((filename ) => {
+    ArtCollection.findOne({_id: req.params.id}, (err, doc) => {
+        doc['artCollection'].forEach(filename => {
             if(!newCollection['artCollection'].includes(filename)){
                 var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
-                fs.unlink(filepath, (error) => 
-                    {
-                        if (error) {
-                            throw(error);
-                                }
+                fs.unlink(filepath, (error) => {
+                    if (error) throw(error);
                     console.log('Deleted filename', filepath);
-                    }
-                    )
+                });
             }
-        })
+        });
         if (err) return handleError(err);       
-    } );
+    });
 
 
 
-    ArtCollection.updateOne({_id: req.params.id}, newCollection)
+    ArtCollection.updateOne({_id: req.params.id}, newCollectionObj)
         .then(result => {
             console.log(result)
             res.status(200).json({msg: 'Post Updated!'})
@@ -120,26 +104,22 @@ router.delete('/:id', checkAuth, (req, res, next) => {
     //delete image file in backend
     ArtCollection.findOne({_id: req.params.id})
     .then(doc => {
-        doc['artCollection'].forEach((filename ) => {           
-                var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
-                fs.unlink(filepath, (error) => 
-                    {
-                        if (error) {
-                            throw(error);
-                                }
-                    console.log('Deleted filename', filepath);
-                    }
-                    )
-                    })
+        doc['artCollection'].forEach(filename => {           
+            var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
+            fs.unlink(filepath, (error) => {
+                if (error) throw(error);
+                console.log('Deleted filename', filepath);
+            });
+        });
         return req.params.id
-    })                 
+    })               
    .then(result =>{
     //delete image in mongodb
     ArtCollection.deleteOne({_id: result})
     .then(result => {
       console.log('result artcol',result['artCollection']);
       res.status(200).json({msg: "Post deleted!"})
-    })
+    });
     
 
 }).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the collection!'}));;
