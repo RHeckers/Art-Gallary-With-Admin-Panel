@@ -83,11 +83,6 @@ router.get('/',(req, res, next) => {
 // create bulkwrite object
 
 
-
-
-
-
-
 router.put('/:id', checkAuth, (req, res, next) => {
     let newCollection = req.body.artCollection;
 
