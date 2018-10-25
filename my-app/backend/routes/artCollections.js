@@ -93,12 +93,14 @@ router.put('/:id', checkAuth, (req, res, next) => {
     })
 
     //Delete files from backend  
-    ArtCollection.findOne({_id: req.params.id}, (err, doc) => {
+    ArtCollection.findOne({_id: req.params.id}, function (err, doc) {
         doc['artCollection'].forEach(filename => {
             if(!newCollection['artCollection'].includes(filename)){
                 var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
                 fs.unlink(filepath, (error) => {
-                    if (error) throw(error);
+                    if (error) {
+                        throw(error)
+                    };
                     console.log('Deleted filename', filepath);
                 });
             }
@@ -125,7 +127,9 @@ router.delete('/:id', checkAuth, (req, res, next) => {
         doc['artCollection'].forEach(filename => {           
             var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
             fs.unlink(filepath, (error) => {
-                if (error) throw(error);
+                if (error){
+                    throw(error)
+                };
                 console.log('Deleted filename', filepath);
             });
         });
