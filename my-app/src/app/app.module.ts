@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-//Imported custom modules
+// Imported custom modules
 import { AppRoutingModule } from './app-routing.module';
 
-//Imported components
+// Imported components
 import { AppComponent } from './app.component';
 import { GallaryComponent } from './components/gallary/gallary.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -16,9 +16,9 @@ import { AddCollectionComponent } from './components/add-collection/add-collecti
 import { EditCollectionComponent } from './components/edit-collection/edit-collection.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterLoginComponent } from './components/register-login/register-login.component';
- 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
-//Imported services
+// Imported services
 import { ArtCollectionService } from './services/art-collection.service';
 import { AuthInterceptorService } from './services/auth-interceptor';
 
@@ -26,12 +26,12 @@ import { AuthInterceptorService } from './services/auth-interceptor';
   declarations: [
     AppComponent,
     GallaryComponent,
-    NavbarComponent, 
-    FooterComponent, 
-    AdminPanelComponent, 
-    AddCollectionComponent, 
-    EditCollectionComponent, 
-    NotFoundComponent, 
+    NavbarComponent,
+    FooterComponent,
+    AdminPanelComponent,
+    AddCollectionComponent,
+    EditCollectionComponent,
+    NotFoundComponent,
     RegisterLoginComponent
   ],
   imports: [
@@ -39,8 +39,9 @@ import { AuthInterceptorService } from './services/auth-interceptor';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
-  ], 
+    ReactiveFormsModule,
+    DragDropModule
+  ],
   providers: [ArtCollectionService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })

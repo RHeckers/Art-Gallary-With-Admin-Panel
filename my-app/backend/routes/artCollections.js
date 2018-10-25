@@ -64,6 +64,30 @@ router.get('/',(req, res, next) => {
       });
 });
 
+//new ceriel
+// router.put('/', checkAuth, (req, res, next) => {
+//     var bulklist = [];
+//     var bulkwrite = {};
+    
+//     ArtCollection.find() 
+//         .then(collections => {
+//             for(let i = 0; i < collections.length; i++){
+//                 bulkwrite =  {
+//                     updateOne: {
+//                       filter: { _id: 'Eddard Stark' },
+//                       update: { title: 'Hand of the King' }
+//                     }
+//                   }
+//         });
+    // ArtCollection.createCollection()
+// create bulkwrite object
+
+
+
+
+
+
+
 router.put('/:id', checkAuth, (req, res, next) => {
     let collectionUrls = [];
     let newCollection = []

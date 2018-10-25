@@ -2,8 +2,9 @@
   <div class="titleHolder">
     <h1 class="editPageTitle">Edit Art Collections:</h1>
   </div>
+  <div cdkDropList class="artcollections" (cdkDropListDropped)="drop($event)">
 
-  <div *ngFor="let collection of artCollections; let i = index" #element>
+  <div *ngFor="let collection of artCollections; let i = index" #element cdkDrag>
     <div *ngIf="edit != i;else editForm">
       <div class="collections">
         <p class="collectionTitle">{{collection.title}}</p>
