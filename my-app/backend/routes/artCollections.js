@@ -80,7 +80,7 @@ router.put('/:id', checkAuth, (req, res, next) => {
                 var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
                 fs.unlink(filepath, (error) => {
                     if (error) {
-                        throw(error);
+                        console.log(error)
                     }
                     console.log('Deleted filename', filepath);
                 });
@@ -109,7 +109,7 @@ router.delete('/:id', checkAuth, (req, res, next) => {
             var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
             fs.unlink(filepath, (error) => {
                 if (error) {
-                    throw(error);
+                    console.log(error)
                 }
                 console.log('Deleted filename', filepath);
             });
