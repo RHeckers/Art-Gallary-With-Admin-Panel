@@ -142,9 +142,9 @@ export class EditCollectionComponent implements OnInit {
 
     moveItemInArray(this.artCollections, event.previousIndex, event.currentIndex);
     for( let i = 0; i < this.artCollections.length; i++) {
-      this.artCollections[i]['index'] = i;
-    }
-    console.log( this.artCollections);
+      this.artCollections[i]['index'] = i; }
+    this.artCollectionService.bulkUpdateArtcollections(this.artCollections);
+    console.log( this.artCollections[0].id);
 
   }
 }
