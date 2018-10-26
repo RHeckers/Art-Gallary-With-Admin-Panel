@@ -5,6 +5,8 @@ const multer = require('multer');
 const mongoose = require('mongoose');
 
 const artCollectionRoutes = require('./routes/artCollections');
+const bulkWriteRoutes = require('./routes/bulkWrite');
+
 const authRoutes = require('./routes/auth');
 
 const app = express();
@@ -32,6 +34,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use('/api/artCollections', artCollectionRoutes);
+app.use('/api/bulkWrite', bulkWriteRoutes);
+
 app.use('/api/auth', authRoutes);
 
 

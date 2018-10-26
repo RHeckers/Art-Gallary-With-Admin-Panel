@@ -13,6 +13,7 @@ import { GlobalServiceService } from '../../services/global-service.service';
 export class AddCollectionComponent implements OnInit {
 
   collectionTitle: string;
+  collectionIndex: number;
   imgHolder: HTMLElement;
   imgInput: HTMLElement;
   imagePreviews: Array<any> = [];
@@ -21,7 +22,7 @@ export class AddCollectionComponent implements OnInit {
   previewHeader: HTMLElement
 
   constructor(
-    private artCollectionService: ArtCollectionService, 
+    private artCollectionService: ArtCollectionService,
     private imgControlles: ImageControllesService,
     private globalService: GlobalServiceService,
     ) {
@@ -43,7 +44,7 @@ export class AddCollectionComponent implements OnInit {
     this.globalService.setLoader(true);
     //Check if there is a title and images in the upload preivew
     if(this.collectionTitle && this.previewFiles != []){
-      this.artCollectionService.addArtCollection(this.collectionTitle, this.previewFiles); 
+      this.artCollectionService.addArtCollection(this.collectionIndex, this.collectionTitle, this.previewFiles); 
       this.imgControlles.imagePreviews = [];
       this.imgControlles.previewFiles = [];
       this.imagePreviews = []
@@ -52,14 +53,12 @@ export class AddCollectionComponent implements OnInit {
       return;
     }
 
-    
-
     //If there is no title or the title is to short, insert error message
-    if(!this.collectionTitle || 
-       this.collectionTitle.length < 3 || 
+    if(!this.collectionTitle ||
+       this.collectionTitle.length < 3 ||
        this.collectionTitle.length > 25){
         this.globalService.insertError(
-          'Title needs to be between 3 and 25 characters', 
+          'Title needs to be between 3 and 25 characters',
           this.titleInput);
         this.globalService.setLoader(false);
     }
@@ -69,7 +68,7 @@ export class AddCollectionComponent implements OnInit {
         'There needs to be at least one picture in the collection', 
         this.previewHeader);
       this.globalService.setLoader(false);
-    } 
+    }
 
   }
 
@@ -86,7 +85,7 @@ export class AddCollectionComponent implements OnInit {
     // from the returned object
     this.previewFiles = files['previewFiles'];
     this.imagePreviews = files['imagePreviews'];
-    console.log("previews:",this.previewFiles,this.imagePreviews);
+    console.log("previews:", this.previewFiles, this.imagePreviews);
   }
 
   //Function to swap the images in the preview

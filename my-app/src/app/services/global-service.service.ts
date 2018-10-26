@@ -11,8 +11,8 @@ export class GlobalServiceService {
 
   //Switch possition in array
   setNewPosFileArray(arr, from, to) {
-    let cutOut = arr.splice(from, 1) [0];
-    arr.splice(to, 0, cutOut); 
+    const cutOut = arr.splice(from, 1) [0];
+    arr.splice(to, 0, cutOut);
     return arr;
   };
 
@@ -23,19 +23,19 @@ export class GlobalServiceService {
         loaderDiv.className = "loader";
         loaderDiv.style.marginTop ;
         const x = document.querySelector('body') as HTMLElement;
-        x.appendChild(loaderDiv);        
+        x.appendChild(loaderDiv);
         break;
       case false:
         const loader = document.querySelector('.loader');
         if(loader) loader.remove();
-        
+
         break;
     }
   }
 
-  //Insert error message
+  // Insert error message
   insertError(msg, insertAfter){
-    let error = document.createElement('p');
+    const error = document.createElement('p');
     error.className = 'errorMsg';
     error.innerHTML = msg;
     insertAfter.parentNode.insertBefore(error, insertAfter.nextSibling);
