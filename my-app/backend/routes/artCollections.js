@@ -85,7 +85,8 @@ router.put('/:id', checkAuth, (req, res, next) => {
 
                     fs.unlink(filepath, (error) => {
                         if (error) {
-                            throw(error)
+                            console.log(error)
+                            res.status(400).json({ msg: 'Something went wrong deleting the images!'})
                         };
                         console.log('Deleted filename', filepath);
                     });
