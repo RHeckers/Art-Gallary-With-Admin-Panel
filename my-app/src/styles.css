@@ -28,6 +28,10 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
+button:hover{
+	transform: scale(1.08);
+}
 body {
 	font-family: 'Source Code Pro', monospace;
 	font-weight: 100;

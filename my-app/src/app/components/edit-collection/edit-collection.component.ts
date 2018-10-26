@@ -139,13 +139,16 @@ export class EditCollectionComponent implements OnInit {
     this.artCollectionService.deleteArtCollection(collectionId);
   }
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousIndex, event.currentIndex);
-
     moveItemInArray(this.artCollections, event.previousIndex, event.currentIndex);
     for( let i = 0; i < this.artCollections.length; i++) {
       this.artCollections[i]['index'] = i; }
     this.artCollectionService.bulkUpdateArtcollections(this.artCollections);
-    console.log( this.artCollections[0].id);
+  }
+  dropimage(event: CdkDragDrop<string[]>) {
+    console.log(event.previousIndex, event.currentIndex);
+
+    // moveItemInArray(event.previousIndex, event.currentIndex);
+  
 
   }
 }

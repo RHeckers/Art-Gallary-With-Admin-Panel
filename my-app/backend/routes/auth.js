@@ -42,7 +42,7 @@ router.post("/signin", (req, res, next) => {
 
             const token = jwt.sign({email: fetchedUser.email, userId: fetchedUser._id}, 
                 "this is just some long string to hash the token",
-                {expiresIn: '1h'});
+                {expiresIn: '24h'});
             
             console.log(token);
             res.status(200).json({token: token});
