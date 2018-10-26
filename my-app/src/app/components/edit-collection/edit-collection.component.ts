@@ -4,6 +4,8 @@ import { ImageControllesService } from './../../services/image-controlles.servic
 import { Component, OnInit } from '@angular/core';
 import { ArtCollectionService } from '../../services/art-collection.service';
 import { ArtCollection } from '../../models/ArtCollection';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-edit-collection',
@@ -53,13 +55,13 @@ export class EditCollectionComponent implements OnInit {
     this.imgControlles.imagePreviews = [];
     this.imgControlles.newImgPaths = [];
     //Get all image holders
-    this.imgHolders = document.querySelectorAll('.collectionImages'); 
+    this.imgHolders = document.querySelectorAll('.collectionImages');
     
     //Hide all image holders and show the one corresponding to the art Collection to edit
     for(let i = 0; i < this.imgHolders.length; i++){
       const imgHolder = this.imgHolders[i] as HTMLElement;
       imgHolder.style.display = 'none';
-      if(i == index) imgHolder.style.display = 'block';
+      if(i === index) imgHolder.style.display = 'block';
     } 
     // Set this.edit to the index, 
     // to switch the HTML template of the collection you want 
@@ -69,7 +71,7 @@ export class EditCollectionComponent implements OnInit {
 
   //Close edit by setting edit index to -1 or some other value below 0
   closeEdit(){
-    this.edit = -1
+    this.edit = -1;
   }
 
   //Function to update the art collection
@@ -77,6 +79,7 @@ export class EditCollectionComponent implements OnInit {
     this.globalService.setLoader(true);
     //Create a new object with the updated values
     const updatedCollection = {
+      index: index,
       id: id,
       title: title,
       artCollection: this.artCollections[index].artCollection
@@ -134,5 +137,14 @@ export class EditCollectionComponent implements OnInit {
     el.remove();
     this.artCollectionService.deleteArtCollection(collectionId);
   }
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event.previousIndex, event.currentIndex);
 
+    moveItemInArray(this.artCollections, event.previousIndex, event.currentIndex);
+    for( let i = 0; i < this.artCollections.length; i++) {
+      this.artCollections[i]['index'] = i; }
+    this.artCollectionService.bulkUpdateArtcollections(this.artCollections);
+    console.log( this.artCollections[0].id);
+
+  }
 }

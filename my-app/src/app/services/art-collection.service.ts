@@ -4,10 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-//Imported models
+// Imported models
 import { ArtCollection } from './../models/ArtCollection';
+import { BulkWrite } from './../models/BulkWrite';
 
-//Imported services
+// Imported services
 import { ImageControllesService } from './image-controlles.service';
 import { AuthService } from './auth.service';
 
@@ -22,8 +23,9 @@ export class ArtCollectionService {
 
   private artCollections: Array<ArtCollection> = [];
   private updatedCollections = new Subject<Array<ArtCollection>>();
+  private bulkWrite: Array<BulkWrite> = [];
 
-  //Injections
+  // Injections
   constructor(
     private http: HttpClient, 
     private imgControlles: ImageControllesService,
@@ -31,14 +33,44 @@ export class ArtCollectionService {
     private globalService: GlobalServiceService
     ) { }
 
-  //Get the art collections from the backend
+
+
+  bulkUpdateArtcollections (artCollections): void {
+
+    for (let i = 0; i < artCollections.length; i++) {
+
+      const bulkwrite: BulkWrite = {
+                updateOne: {
+                  filter: { _id: artCollections[i].id },
+                  update: {
+                    $set: {
+                      index: artCollections[i].index}
+                          }
+                }
+              };
+        this.bulkWrite.push(bulkwrite);
+        }
+
+    // Make the put request to update the collection
+    this.http.put('http://localhost:3000/api/bulkWrite', this.bulkWrite)
+      .subscribe(res => {
+        console.log(res);
+        this.globalService.setLoader(false);
+      });
+  }
+
+
+
+
+  // Get the art collections from the backend
   getArtCollections (): Observable<Array<ArtCollection>> {
-    //Make the API GET request
+    // Make the API GET request
     this.http.get<Array<any>>('http://localhost:3000/api/artCollections')
       .pipe(map((data) => {
-        //Map the data to new objects where _id = id
+        // Map the data to new objects where _id = id
         return data.map(artCollection => {
           return {
+            index: artCollection.index,
             title: artCollection.title,
             artCollection: artCollection.artCollection,
             id: artCollection._id
@@ -53,57 +85,57 @@ export class ArtCollectionService {
       return this.updatedCollections;
   }
 
-  //Add a art collection
-  addArtCollection(title: string, art: Array<any>){
-    //Create FormData so you can append files
+  // Add a art collection
+  addArtCollection(index: number, title: string, art: Array<any>){
+    // Create FormData so you can append files
     const artCollectionData = new FormData();
-    artCollectionData.append("title", title);  
+    artCollectionData.append("title", title);
     for(let i = 0; i < art.length; i++){
         artCollectionData.append("images", art[i]);
     }
-    //Make the post request
+    // Make the post request
     this.http.post<ArtCollection>('http://localhost:3000/api/artCollections', artCollectionData)
     .subscribe((res) => {
-      //Add the artCollection to the current collections
-      const newCollection = {id: res.id, title: title, artCollection: res.artCollection}
+      // Add the artCollection to the current collections
+      const newCollection = {index: res.index, id: res.id, title: title, artCollection: res.artCollection}
       this.artCollections.unshift(newCollection);
       this.updatedCollections.next([...this.artCollections]);
       this.globalService.setLoader(false);
     });
   }
 
-  //Update an art Collection
+  // Update an art Collection
   updateArtCollection(collection){
     let images = collection.artCollection;
     let indexes = []
-    //Find the images that dont have a valid URL and push the index to indexes arr
+    // Find the images that dont have a valid URL and push the index to indexes arr
     for(let i = 0; i < images.length; i++){
       const image = images[i];
       if(!image.includes('http://')){
         indexes.push(i);
       }
     }
-    //Get the images that dont have a valid ID and assign it with a valid one
+    // Get the images that dont have a valid ID and assign it with a valid one
     for(let i = 0; i < indexes.length; i++){
-      let arrIndex = indexes[i];
+      const arrIndex = indexes[i];
       images[arrIndex] = this.imgControlles.newImgPaths[i];
     }
-    //Create a new object with the updated values including the new valid URL's
+    // Create a new object with the updated values including the new valid URL's
     const updatedCollection = {
+      index: collection.index,
       id: collection.id,
       title: collection.title,
       artCollection: images
     }
 
-    
-    //Make the put request to update the collection
+    // Make the put request to update the collection
     this.http.put('http://localhost:3000/api/artCollections/' + collection.id, updatedCollection)
       .subscribe(res => {
         console.log(res);
         this.globalService.setLoader(false);
       });
   }
-  //Delete an art collection
+  // Delete an art collection
   deleteArtCollection(collectionId: string){
     this.http.delete('http://localhost:3000/api/artCollections/' + collectionId)
      .subscribe(() => {

@@ -1,4 +1,4 @@
-const express = require('express');
+     const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const ArtCollection = require('../models/artCollection');
@@ -58,11 +58,13 @@ router.post('/', checkAuth, multer({storage: fileStorage}).array("images"), (req
 });
 
 router.get('/',(req, res, next) => {
-    ArtCollection.find()
+    ArtCollection.find().sort({index: 1})
       .then(collections => {
-          res.status(200).json(collections.reverse());
+          res.status(200).json(collections);
       });
 });
+
+
 
 router.put('/:id', checkAuth, (req, res, next) => {
     let newCollection = req.body.artCollection;
@@ -72,35 +74,39 @@ router.put('/:id', checkAuth, (req, res, next) => {
             title: req.body.title,
             artCollection: newCollection
     })
-
+    // console.log(newCollection);
     //Delete files from backend  
-    ArtCollection.findOne({_id: req.params.id}, function (err, doc) {
+    ArtCollection.findOne({_id: req.params.id}) 
+    .then(doc => {
         doc['artCollection'].forEach(filename => {
-            if(!newCollection.includes(filename)){
+               if(!newCollection.includes(filename)){
                 var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
-                fs.unlink(filepath, (error) => {
-                    if (error) {
-                        console.log(error)
-                        res.status(400).json({ msg: 'Something went wrong deleting the images!'})
-                    }
-                    console.log('Deleted filename', filepath);
-                });
+                if (fs.existsSync(filepath)) {  
+
+                    fs.unlink(filepath, (error) => {
+                        if (error) {
+                            throw(error)
+                        };
+                        console.log('Deleted filename', filepath);
+                    });
+                }
+                else{console.log(filepath + 'file does not exist') }
+
             }
         });
-        if (err) return handleError(err);       
-    });
-
-
-
-    ArtCollection.updateOne({_id: req.params.id}, newCollectionObj)
+        return req.params.id;
+    })
+    .then(id=> {
+    ArtCollection.updateOne({_id: id}, newCollectionObj)
         .then(result => {
             console.log(result)
             res.status(200).json({msg: 'Post Updated!'})
         })
-        .catch(err => console.log(err));
-        
-    
+            
+})
+.catch(err => console.log(err));
 });
+
 
 router.delete('/:id', checkAuth, (req, res, next) => {
     //delete image file in backend
@@ -108,6 +114,7 @@ router.delete('/:id', checkAuth, (req, res, next) => {
     .then(doc => {
         doc['artCollection'].forEach(filename => {           
             var filepath =  "backend/" + filename.split("http://localhost:3000/")[1];
+            if (fs.existsSync(filepath)) {              
             fs.unlink(filepath, (error) => {
                 if (error) {
                     console.log(error)
@@ -115,6 +122,9 @@ router.delete('/:id', checkAuth, (req, res, next) => {
                 }
                 console.log('Deleted filename', filepath);
             });
+              //file exists
+            }
+            else{console.log(filepath + 'file does not exist') }
         });
         return req.params.id
     })               
@@ -122,12 +132,10 @@ router.delete('/:id', checkAuth, (req, res, next) => {
     //delete image in mongodb
     ArtCollection.deleteOne({_id: result})
     .then(result => {
-      console.log('result artcol',result['artCollection']);
-      res.status(200).json({msg: "Post deleted!"})
+      console.log('Collection deleted');
+      res.status(200).json({msg: "Collection deleted!"})
     });
-    
-
-   }).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the collection!'}));;
+}).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the collection!'}));;
 
 });
 
