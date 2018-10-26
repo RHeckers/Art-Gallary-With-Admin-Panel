@@ -8,14 +8,18 @@
     font-weight: bold;
     text-transform: uppercase;
 }
-
+.artcollections{
+    margin-top: 10%;
+}
 .collections{
     width: 800px;
     height: 40px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    margin-top: 10%;
+    border-bottom: 1px solid gray;
     margin: 5px 0;
     margin-left: calc(50% - 400px);
-    background: rgba(226, 210, 210, 0.767);
+    background: white;
     border-radius: 2px;
 }
 
@@ -45,10 +49,12 @@
     width: 50px;
     padding: 0 !important;
     cursor: pointer;
-    background: green;
-    border: 1px solid green;
+    background: grey;;
+    border: 1px solid grey;;
     border-radius: 5px;
     font-weight: bold;
+    color:white;
+
 }
 .editBtn2{
     position: relative;
@@ -59,10 +65,11 @@
     width: 50px;
     padding: 0 !important;
     cursor: pointer;
-    background: green;
-    border: 1px solid green;
+    background: grey;;
+    border: 1px solid grey;;
     border-radius: 5px;
     font-weight: bold;
+    color:white;
 }
 .deleteBtn{
     position: relative;
@@ -73,10 +80,12 @@
     width: 60px;
     padding: 0 !important;
     cursor: pointer;
-    background: red;
-    border: 1px solid red;
+    background: grey;
+    border: 1px solid grey;;
     border-radius: 5px;
     font-weight: bold;
+    color:white;
+
 }
 .deleteBtn2{
     position: relative;
@@ -87,10 +96,12 @@
     width: 60px;
     padding: 0 !important;
     cursor: pointer;
-    background: red;
-    border: 1px solid red;
+    background:grey;
+    border: 1px solid grey;
     border-radius: 5px;
     font-weight: bold;
+    color:white;
+
 }
 
 .collectionImages{
@@ -122,6 +133,23 @@
     visibility: hidden;
 }
 
+.description{
+    width: 800px;
+    height: 40px;
+    margin: 15px 0;
+    margin-left: calc(50% - 400px);
+    font-size: 20px;
+    padding-left: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    color: white;
+    margin-bottom:3%;
+
+
+}
+
 .imgInputBtn{
     width: 800px;
     height: 40px;
@@ -139,10 +167,18 @@
     -webkit-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
     background-size: 300% 100%;
-    background-image: linear-gradient(to right, rgb(1, 19, 37), rgb(120, 19, 37), rgb(185, 19, 37), rgb(200, 19, 37), rgb(1, 19, 37));
+   background-color: gray;
 
 
 }
 .imgInputBtn:hover{
     background-position: 100% 0;
+}
+
+#descriptionTextarea{
+    width: 98%;
+}
+.descriptionLabel{
+    margin-bottom: 1%;
+    color:black;
 }

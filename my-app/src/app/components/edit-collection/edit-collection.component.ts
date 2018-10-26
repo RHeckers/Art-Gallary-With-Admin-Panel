@@ -30,7 +30,7 @@ export class EditCollectionComponent implements OnInit {
 
   //Hide footer and get artCollections
   ngOnInit() {
-    document.getElementById('footer').style.display = 'none';
+    // document.getElementById('footer').style.display = 'none';
     this.getArtCollections();
   }
 
@@ -75,13 +75,14 @@ export class EditCollectionComponent implements OnInit {
   }
 
   //Function to update the art collection
-  updateCollection(e, index, title, id){
+  updateCollection(e, index, title, id, description){
     this.globalService.setLoader(true);
     //Create a new object with the updated values
     const updatedCollection = {
       index: index,
       id: id,
       title: title,
+      description: description,
       artCollection: this.artCollections[index].artCollection
     }
     //Set the collection to the updated values to display it in the front end

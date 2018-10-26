@@ -1,23 +1,31 @@
 <div class="container">
   <div class="centerText">
-    <h1 class="pageTitle">Add a new art collection</h1>
+    <h1 class="pageTitle">Voeg nieuwe collecties toe</h1>
   </div>
 
-  <p class="label">Enter a title:</p>
+  <h2 class="label">Voer een titel in:</h2>
   <input
    #inputCollectionTitle
    [(ngModel)]="collectionTitle" 
    class="titleInput" 
    id="titleInput"
    name="titleInput" type="text" 
-   placeholder="Enter a title for the art collection">
+   placeholder="Voer een titel in">
   
+   <h2 class="label">Voer een beschrijving in:</h2>
+
+   
+   <div class="description">
+      <textarea  #textareaCollectionDescription
+      [(ngModel)]="collectionDescription"  rows="4" cols="50" class="descriptionTextarea" id="descriptionTextarea"type="text"  class="collectionDescription" value="Voer een beschrijving in"></textarea>
+      </div>
+   
   <div class="fileInputDiv">
-    <p class="label">Upload images:</p>
+    <p class="label">Upload:</p>
     <button 
       class="imgInputBtn" 
       (click)="filePicker.click()"
-      >Click To Add Images</button> 
+      >Klik hier om afbeeldingen toe te voegen</button> 
 
     <input 
       #filePicker
@@ -34,9 +42,9 @@
       <h2 class="previewHeader" id="previewHeader">Preview:</h2>
     </div>
 
-    <h3 class="label">Preview Titlte: <p class="bold-uppercase-inline">{{collectionTitle}}</p></h3>
+    <h3 class="label"> <p class="bold-uppercase-inline">{{collectionTitle}}</p></h3>
 
-    <p class="label">Images preview  (drag & drop to change order):</p>
+    <p class="label">Wijzig hier de volgorde van de afbeeldingen</p>
     <div class="previewImages"id="previewImages" (dragover)="allowDrop($event)">
       <div *ngFor="let image of imagePreviews; let i = index" class="imgHolder" (dragover)="allowDrop($event)">
           <img  
@@ -50,8 +58,10 @@
       </div>
       
     </div>
-    
-    <button class="imgInputBtn addCollectionBtn" (click)="addCollection()">Add Collection</button> 
+    <p class="label">
+      {{collectionDescription}}
+    </p>
+    <button class="imgInputBtn addCollectionBtn" (click)="addCollection()">Collectie opslaan</button> 
 
 
   </div>

@@ -18,6 +18,7 @@ import { ArtCollectionService } from './../../services/art-collection.service';
 export class GallaryComponent implements OnInit {
 
   activeImg: string;
+  description: string;
   displayedImg: HTMLElement;
   activated: boolean;
   artCollections: Array<ArtCollection>;
@@ -28,6 +29,7 @@ export class GallaryComponent implements OnInit {
 
   //Watch for changes in the ngFor
   @ViewChildren('collectionTitles') artCollectionTitltes: any;
+  @ViewChildren('collectionTitles') artCollectionDescription: any;
 
   constructor(private artCollectionService: ArtCollectionService) {}
 
@@ -50,9 +52,10 @@ export class GallaryComponent implements OnInit {
       this.collectionTitles = document.querySelectorAll('.collection');
         const collectionTitle = this.collectionTitles[0] as HTMLElement;
         if(collectionTitle){
-          collectionTitle.style.color = "red";      
+          collectionTitle.style.textDecoration = "underline";
         }
     });
+    
   }
 
   //Get the art collections
@@ -84,8 +87,10 @@ export class GallaryComponent implements OnInit {
         const title = this.collectionTitles[i] as HTMLElement;
         if(i != index){
           title.style.color = "black";
+          title.style.textDecoration = "none";
+
         }else{
-          title.style.color = "red";
+          title.style.textDecoration = "underline";
         }
       }
     }

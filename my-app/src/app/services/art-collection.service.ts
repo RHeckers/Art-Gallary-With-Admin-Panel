@@ -72,6 +72,7 @@ export class ArtCollectionService {
           return {
             index: artCollection.index,
             title: artCollection.title,
+            description: artCollection.description,
             artCollection: artCollection.artCollection,
             id: artCollection._id
           };
@@ -86,10 +87,12 @@ export class ArtCollectionService {
   }
 
   // Add a art collection
-  addArtCollection(index: number, title: string, art: Array<any>){
+  addArtCollection(index: number, title: string,  art: Array<any>, description: string) {
     // Create FormData so you can append files
     const artCollectionData = new FormData();
     artCollectionData.append("title", title);
+    artCollectionData.append("description", description);
+
     for(let i = 0; i < art.length; i++){
         artCollectionData.append("images", art[i]);
     }
@@ -97,7 +100,7 @@ export class ArtCollectionService {
     this.http.post<ArtCollection>('http://localhost:3000/api/artCollections', artCollectionData)
     .subscribe((res) => {
       // Add the artCollection to the current collections
-      const newCollection = {index: res.index, id: res.id, title: title, artCollection: res.artCollection}
+      const newCollection = {index: res.index, description: res.description, id: res.id, title: title, artCollection: res.artCollection}
       this.artCollections.unshift(newCollection);
       this.updatedCollections.next([...this.artCollections]);
       this.globalService.setLoader(false);
@@ -125,7 +128,8 @@ export class ArtCollectionService {
       index: collection.index,
       id: collection.id,
       title: collection.title,
-      artCollection: images
+      artCollection: images,
+      description: collection.description
     }
 
     // Make the put request to update the collection

@@ -1,8 +1,9 @@
 nav{
     height: 75px;
-    background: rgb(1, 17, 93);
+    background: white;
     color: white;
     text-transform: uppercase;
+    border-bottom: 1px solid rgba(0,0,0,.0975);
 }
 
 .logo{

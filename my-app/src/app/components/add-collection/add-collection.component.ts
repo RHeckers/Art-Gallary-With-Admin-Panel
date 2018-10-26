@@ -13,13 +13,15 @@ import { GlobalServiceService } from '../../services/global-service.service';
 export class AddCollectionComponent implements OnInit {
 
   collectionTitle: string;
+  collectionDescription: string;
   collectionIndex: number;
   imgHolder: HTMLElement;
   imgInput: HTMLElement;
   imagePreviews: Array<any> = [];
   previewFiles: Array<File> = [];
-  titleInput: HTMLElement
-  previewHeader: HTMLElement
+  titleInput: HTMLElement;
+  collectionTextarea: HTMLElement;
+  previewHeader: HTMLElement;
 
   constructor(
     private artCollectionService: ArtCollectionService,
@@ -30,42 +32,54 @@ export class AddCollectionComponent implements OnInit {
 
   ngOnInit() {
     //Hide footer
-    document.getElementById('footer').style.display = 'none';
+    // document.getElementById('footer').style.display = 'none';
 
     //Get HTML elements by ID
     this.imgInput = document.getElementById('imgInput');
     this.imgHolder = document.getElementById('previewImages'); 
     this.titleInput = document.getElementById('titleInput'); 
+    this.collectionTextarea = document.getElementById('descriptionTextarea'); 
     this.previewHeader = document.getElementById('previewHeader'); 
   }
 
   //Function to add a collection and empty the form
   addCollection(){
+    console.log(this.collectionDescription);
     this.globalService.setLoader(true);
     //Check if there is a title and images in the upload preivew
     if(this.collectionTitle && this.previewFiles != []){
-      this.artCollectionService.addArtCollection(this.collectionIndex, this.collectionTitle, this.previewFiles); 
+      this.artCollectionService.addArtCollection(this.collectionIndex,
+         this.collectionTitle, this.previewFiles, this.collectionDescription); 
       this.imgControlles.imagePreviews = [];
       this.imgControlles.previewFiles = [];
       this.imagePreviews = []
+      this.collectionDescription = '';
       this.previewFiles = [];
       this.collectionTitle = '';
       return;
     }
-
-    //If there is no title or the title is to short, insert error message
-    if(!this.collectionTitle ||
+ // If there is no collectionDescription or the collectionDescription is to short, insert error message
+    if (!this.collectionDescription ||
+      this.collectionDescription.length < 3 ||
+      this.collectionDescription.length > 25){
+      this.globalService.insertError(
+        'Titel moet tussen de 3 en 25 karakters lang zijn',
+        this.collectionDescription);
+      this.globalService.setLoader(false);
+    }
+    // If there is no title or the title is to short, insert error message
+    if (!this.collectionTitle ||
        this.collectionTitle.length < 3 ||
        this.collectionTitle.length > 25){
         this.globalService.insertError(
-          'Title needs to be between 3 and 25 characters',
+          'Titel moet tussen de 3 en 25 karakters lang zijn',
           this.titleInput);
         this.globalService.setLoader(false);
     }
-    //If there are no images to upload with the collection insert an error message
-    if(this.previewFiles == []){
+    // If there are no images to upload with the collection insert an error message
+    if (this.previewFiles === []){
       this.globalService.insertError(
-        'There needs to be at least one picture in the collection', 
+        'Minimaal 1 afbeelding is vereist',
         this.previewHeader);
       this.globalService.setLoader(false);
     }
@@ -76,11 +90,11 @@ export class AddCollectionComponent implements OnInit {
     ev.preventDefault();
 }
 
-  //Function to add new images to the preview
+  // Function to add new images to the preview
   getPreviewImages(e){
     this.globalService.setLoader(true);
     //Send the files to the service and get back the files and temp paths
-    let files = this.imgControlles.getPreviewImages(e.target.files);
+    const files = this.imgControlles.getPreviewImages(e.target.files);
     //Assign the previewFiles and imagePrevies with the corresponding key value pairs 
     // from the returned object
     this.previewFiles = files['previewFiles'];

@@ -1,3 +1,8 @@
+h2, h3{
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
 .titleInput{
     width: 80%;
     margin-left: 10%;
@@ -6,6 +11,23 @@
     padding-left: 5px;
 }
 
+.description{
+    width: 80%;
+    margin-left: 10%;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 5px;
+    margin-bottom: 5%;
+
+}
+
+#descriptionTextarea{
+    width: 100%;
+}
+.descriptionLabel{
+    margin-bottom: 1%;
+    color:black;
+}
 .pageTitle{
     text-transform: uppercase;
     font-weight: 600;
@@ -39,7 +61,7 @@
     -webkit-transition: all .4s ease-in-out;
     transition: all .4s ease-in-out;
     background-size: 300% 100%;
-    background-image: linear-gradient(to right, rgb(1, 19, 37), rgb(120, 19, 37), rgb(185, 19, 37), rgb(200, 19, 37), rgb(1, 19, 37));
+    border:lightslategray;
 
 
 }

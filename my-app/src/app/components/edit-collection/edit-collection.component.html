@@ -1,14 +1,14 @@
 <div class="container">
   <div class="titleHolder">
-    <h1 class="editPageTitle">Edit Art Collections:</h1>
+    <h1 class="editPageTitle">Collectie aanpassen:</h1>
   </div>
   <div cdkDropList class="artcollections" (cdkDropListDropped)="drop($event)">
 
-  <div *ngFor="let collection of artCollections; let i = index" #element cdkDrag>
+  <div *ngFor="let collection of artCollections; let i = index" #element >
     <div *ngIf="edit != i;else editForm">
-      <div class="collections">
+      <div class="collections"cdkDrag>
         <p class="collectionTitle">{{collection.title}}</p>
-        <button class="editBtn" (click)="startEdit($event, i)">EDIT</button>
+        <button class="editBtn" (click)="startEdit($event, i)">OPEN</button>
         <button class="deleteBtn" (click)="deleteCollection(collection.id, element)">DELETE</button>
       </div>
     </div> 
@@ -16,15 +16,15 @@
     <ng-template #editForm>
       <div class="collections">
         <input type="text" #titleInput class="collectionTitleInput" value={{collection.title}}>
-        <button class="editBtn2" (click)="closeEdit($event, i)">Close</button>
+        <button class="editBtn2" (click)="closeEdit($event, i)">CLOSE</button>
         <button class="deleteBtn2" (click)="deleteCollection(collection.id, element)">DELETE</button>
       </div>
 
       <button 
       class="imgInputBtn" 
       (click)="filePicker.click()"
-      >Click To Add Images</button> 
-      <p>Drag and drop to change the display order</p>
+      >Klik om afbeeldingen toe te voegen</button> 
+      <p>Sleep de afbeeldingen om de volgorde te wijzigen</p>
 
     <input 
       #filePicker
@@ -44,8 +44,13 @@
               [attr.data-index]="i"> 
               <p class="removeImg" [attr.data-index]="i" (click)="removeImg(i, collection.artCollection)">X</p>
           </div>
+
       </div>
-      <button class="imgInputBtn" (click)="updateCollection($event, i, titleInput.value, collection.id)">CONFIRM CHANGES</button> 
+      <div class="description">
+      <h3 class="descriptionLabel">Beschrijving</h3>
+      <textarea rows="4" cols="50" class="descriptionTextarea" id="descriptionTextarea"type="text" #descriptionInput class="collectionDescription" value={{collection.description}}></textarea>
+      </div>
+      <button class="imgInputBtn" (click)="updateCollection($event, i, titleInput.value, collection.id, descriptionInput.value)">AANPASSINGEN OPSLAAN</button> 
     </ng-template>
 
   </div>

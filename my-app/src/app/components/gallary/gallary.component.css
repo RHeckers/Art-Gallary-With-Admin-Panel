@@ -1,5 +1,6 @@
 .mainTitle{
-    font-size: 25px;
+    font-size: 1em;
+
 }
 
 .collectionsContainer{
@@ -41,7 +42,7 @@
     display: inline-block;
     align-content: center;
     margin-top: 50px;
-    margin-left: 30%;
+    /* margin-left: 30%; */
     width: 80%;
     text-align: center;
 
@@ -98,7 +99,9 @@
 @media only screen and (min-width: 1600px){
     .displayedImg{
         max-height: 700px;
+       
     }
+  
 }
 
 @media only screen and (max-width: 1366px){
@@ -109,6 +112,12 @@
 
     
 
+}
+@media only screen and (min-width: 1100px){
+
+.container{
+    margin-left: 10%;
+}
 }
 
 @media only screen and (max-width: 1100px){
@@ -143,9 +152,7 @@
         position: relative;
         margin-top: 15px;
     }
-    .mainTitle{
-        display: none;
-    }
+    
 
     .imageContainer{
         margin-left: 0%;
@@ -154,3 +161,5 @@
     
 
 }
+
+

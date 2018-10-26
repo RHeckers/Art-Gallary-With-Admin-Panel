@@ -8,7 +8,11 @@ const artCollectionSchema = mongoose.Schema({
     artCollection: {
         type: Array,
         required: true
-    }
+    },
+    description: {
+        type: String,
+        required: true
+    },
 });
 
 module.exports = mongoose.model('ArtCollection', artCollectionSchema);

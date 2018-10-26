@@ -34,7 +34,10 @@ router.post('/addImages', checkAuth, multer({storage: fileStorage}).array("image
     for(let i = 0; i < req.files.length; i++){
         imgPaths.push(url + "/images/" + req.files[i].filename);
     }
-    res.status(201).json(imgPaths);
+    res.status(201).json(imgPaths)
+
+    .catch(err => console.log(err));
+    
 });
 
 router.post('/', checkAuth, multer({storage: fileStorage}).array("images"), (req, res, next) => {
@@ -46,6 +49,7 @@ router.post('/', checkAuth, multer({storage: fileStorage}).array("images"), (req
     }
     const artcollection = new ArtCollection({
         title: req.body.title,
+        description: req.body.description,
         artCollection: imgPaths
     });
     console.log(artcollection);
@@ -54,8 +58,11 @@ router.post('/', checkAuth, multer({storage: fileStorage}).array("images"), (req
             ...createdCollection,
             id: createdCollection._id
         });
-    });
+    })
+    .catch(err => console.log(err));
+
 });
+
 
 router.get('/',(req, res, next) => {
     ArtCollection.find().sort({index: 1})
@@ -72,6 +79,7 @@ router.put('/:id', checkAuth, (req, res, next) => {
     const newCollectionObj = new ArtCollection({
             _id: req.body.id,
             title: req.body.title,
+            description: req.body.description,
             artCollection: newCollection
     })
     // console.log(newCollection);
