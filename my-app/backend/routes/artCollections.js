@@ -131,7 +131,7 @@ router.delete('/:id', checkAuth, (req, res, next) => {
     //delete image in mongodb
     ArtCollection.deleteOne({_id: result})
     .then(result => {
-      console.log('result deleted',result['artCollection']);
+      console.log('Collection deleted');
       res.status(200).json({msg: "Collection deleted!"})
     });
 }).catch(err => res.status(400).json({ msg: 'Something went wrong deleting the collection!'}));;
