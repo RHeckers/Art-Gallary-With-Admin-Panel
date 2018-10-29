@@ -16,6 +16,8 @@ export class EditCollectionComponent implements OnInit {
 
   artCollections: Array<ArtCollection>;
   imgHolders: NodeList;
+  cdkDrags: NodeList;
+  cdkDrag: HTMLElement;
   imgHolder: HTMLElement;
   edit: number;
   previewFiles;
@@ -23,7 +25,7 @@ export class EditCollectionComponent implements OnInit {
 
   //Inject services
   constructor(
-    private artCollectionService: ArtCollectionService, 
+    private artCollectionService: ArtCollectionService,
     private imgControlles: ImageControllesService,
     private globalService: GlobalServiceService
     ) { }
@@ -56,12 +58,25 @@ export class EditCollectionComponent implements OnInit {
     this.imgControlles.newImgPaths = [];
     //Get all image holders
     this.imgHolders = document.querySelectorAll('.collectionImages');
+    this.cdkDrags = document.querySelectorAll('.cdk-drag');
+
     
     //Hide all image holders and show the one corresponding to the art Collection to edit
     for(let i = 0; i < this.imgHolders.length; i++){
       const imgHolder = this.imgHolders[i] as HTMLElement;
+    
+
       imgHolder.style.display = 'none';
-      if(i === index) imgHolder.style.display = 'block';
+      if(i === index) {
+        imgHolder.style.display = 'block';
+        // cdkDrag
+
+      
+      }
+
+      //make list not droppable when active
+
+
     } 
     // Set this.edit to the index, 
     // to switch the HTML template of the collection you want 
@@ -139,16 +154,14 @@ export class EditCollectionComponent implements OnInit {
     this.artCollectionService.deleteArtCollection(collectionId);
   }
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event.previousIndex, event.currentIndex);
+
     moveItemInArray(this.artCollections, event.previousIndex, event.currentIndex);
     for( let i = 0; i < this.artCollections.length; i++) {
       this.artCollections[i]['index'] = i; }
     this.artCollectionService.bulkUpdateArtcollections(this.artCollections);
-  }
-  dropimage(event: CdkDragDrop<string[]>) {
-    console.log(event.previousIndex, event.currentIndex);
-
-    // moveItemInArray(event.previousIndex, event.currentIndex);
-  
+    console.log( this.artCollections[0].id);
 
   }
+
 }

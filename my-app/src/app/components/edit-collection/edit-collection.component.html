@@ -4,10 +4,10 @@
   </div>
   <div cdkDropList class="artcollections" (cdkDropListDropped)="drop($event)">
 
-  <div *ngFor="let collection of artCollections; let i = index" #element >
-    <div *ngIf="edit != i;else editForm">
-      <div class="collections"cdkDrag>
-        <p class="collectionTitle">{{collection.title}}</p>
+  <div *ngFor="let collection of artCollections; let i = index" #element  >
+    <div *ngIf="edit != i;else editForm" cdkDrag>
+      <div  class="collections" >
+        <p  class="collectionTitle">{{collection.title}}</p>
         <button class="editBtn" (click)="startEdit($event, i)">OPEN</button>
         <button class="deleteBtn" (click)="deleteCollection(collection.id, element)">DELETE</button>
       </div>

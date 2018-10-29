@@ -29,7 +29,7 @@ export class GallaryComponent implements OnInit {
 
   //Watch for changes in the ngFor
   @ViewChildren('collectionTitles') artCollectionTitltes: any;
-  @ViewChildren('collectionTitles') artCollectionDescription: any;
+  // @ViewChildren('collectionTitles') artCollectionDescription: any;
 
   constructor(private artCollectionService: ArtCollectionService) {}
 
