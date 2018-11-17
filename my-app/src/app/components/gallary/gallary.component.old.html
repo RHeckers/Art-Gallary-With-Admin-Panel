@@ -1,0 +1,58 @@
+<div class="container">
+  <h1 class="mainTitle">Mariet Posthumus - Debie</h1>
+
+  <div class="collectionsContainer">
+    <h2 class="collectionsTitle"></h2>
+    <div 
+      #collectionTitles
+      *ngFor="let collection of artCollections; let i = index" 
+      class="collections" 
+      id="collections">
+      <p class="collection" id='collectionTitle{{i}}' (click)="activateCollection($event, i)">{{collection.title}}</p>
+    </div>
+    
+  </div>
+
+  <div class="imageContainer">
+    <div>
+      <img 
+        class="displayedImg" 
+        id="displayedImg" 
+        [src]="activeImg" 
+        alt="">
+      <div class="controlles">
+        <img 
+          class="arrow arrowLeft" 
+          src="http://localhost:3000/images/585e47accb11b227491c338a.png" 
+          alt=""
+          (click)="manualSwitchImg('prev')">
+        <label 
+          class="automatedLabel" 
+          for="automated">Automated: 
+            <input class="automatedInput" 
+            name="automated" 
+            checked 
+            id="automatedCheckbox"
+            type="checkbox"
+            (change)="getInputValue($event)">
+        </label>
+        <label 
+          class="speedLabel" 
+          for="speed">Delay: 
+            <input 
+            class="speedInput" 
+            name="speed" 
+            type="text"
+            id="delayInput"
+            (change)="getInputValue($event)">
+        </label> 
+        <img 
+          class="arrow arrowRight" 
+          src="http://localhost:3000/images/585e47b5cb11b227491c338b.png" 
+          alt=""
+          (click)="manualSwitchImg('next')">        
+      </div>
+    </div>
+  </div>
+
+</div> 

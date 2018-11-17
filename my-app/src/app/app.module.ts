@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Imported components
 import { AppComponent } from './app.component';
-import { GallaryComponent } from './components/gallary/gallary.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
@@ -18,14 +17,18 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterLoginComponent } from './components/register-login/register-login.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+
 // Imported services
 import { ArtCollectionService } from './services/art-collection.service';
 import { AuthInterceptorService } from './services/auth-interceptor';
 
+// Swiper config
+import { GalleryModule } from './components/gallary/gallary.module';
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    GallaryComponent,
     NavbarComponent,
     FooterComponent,
     AdminPanelComponent,
@@ -40,9 +43,13 @@ import { AuthInterceptorService } from './services/auth-interceptor';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    GalleryModule
+
   ],
-  providers: [ArtCollectionService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [ArtCollectionService,
+       {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
+       ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

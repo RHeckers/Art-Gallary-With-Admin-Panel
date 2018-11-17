@@ -1,0 +1,165 @@
+.mainTitle{
+    font-size: 1em;
+
+}
+
+.collectionsContainer{
+    position: absolute;
+    display: inline-block;
+    margin-top: 100px;
+    width: 40%;
+    top: 0;
+
+}
+
+.collectionsTitle{
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+/* Uses prefix for ASYNC classes*/
+:host ::ng-deep .collection{
+    display: block;
+    font-size: 15px;
+    margin: 12.5px 0px;
+    cursor: pointer;
+}
+:host ::ng-deep .collection:hover{
+    font-size: 16px;
+}
+
+:host ::ng-deep .activeCollection{
+    color: blue;
+}
+
+.activeCollection{
+    color: blue;
+}
+
+
+.imageContainer{
+    position: relative;
+    display: inline-block;
+    align-content: center;
+    margin-top: 50px;
+    margin-left: 30%;
+    width: 80%;
+    text-align: center;
+
+}
+
+.displayedImg{
+    max-width: 100%;
+}
+
+.arrow{
+    max-width: 30px;
+    margin: 10px 150px;
+    margin-top: 20px;
+    cursor: pointer;
+     
+}
+
+.arrowLeft{
+    margin-left: 150px;
+}
+
+.arrow:hover{
+    transform: scale(1.1);
+}
+
+.speedLabel{
+    position: absolute;
+    margin-top: 18px;
+    margin-left: 30px;
+}
+
+.speedInput{
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.automatedLabel{
+    position: absolute;
+    margin-top: 25px;
+    margin-left: -120px;
+}
+
+.automatedInput{
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+@media only screen and (min-width: 1600px){
+    .displayedImg{
+        max-height: 700px;
+       
+    }
+  
+}
+
+@media only screen and (max-width: 1366px){
+    .imageContainer{
+        margin-top: 5px;
+    
+    }
+
+    
+
+}
+@media only screen and (min-width: 1100px){
+
+.container{
+    margin-left: 10%;
+}
+}
+
+@media only screen and (max-width: 1100px){
+    .imageContainer{
+        margin-top: 5px;
+    
+    }
+
+    .collectionsTitle{
+        margin-bottom: 0px;
+    }
+
+    .collections{
+        height: 15px;
+    }
+
+    .arrow{
+        margin: 15px 15px;
+    }
+
+    .automatedLabel{
+        margin-top: 50px;
+    }
+
+    .speedLabel{
+        margin-top: 44px;
+    }
+    .collectionsContainer{
+        width: 100%;
+        text-align: center;
+        display: block;
+        position: relative;
+        margin-top: 15px;
+    }
+    
+
+    .imageContainer{
+        margin-left: 0%;
+        width: 100%;
+    }
+    
+
+}
+
+
