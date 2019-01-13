@@ -11,7 +11,7 @@ const authRoutes = require('./routes/auth');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://rheckers:B83bWrT4DII2I1q0@cluster0-uidwd.mongodb.net/art-gallary?retryWitres="true"', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://mariet:Ceriel09011992@cluster0-64sev.azure.mongodb.net/test?retryWrites=true', { useNewUrlParser: true })
  .then(() => {
      console.log('Connected to database!')
  })
