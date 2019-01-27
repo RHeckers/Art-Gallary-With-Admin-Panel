@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 //Imported services
 import { ArtCollectionService } from '../../services/art-collection.service';
 import { ImageControllesService } from '../../services/image-controlles.service';
 import { GlobalServiceService } from '../../services/global-service.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-collection',
   templateUrl: './add-collection.component.html',
-  styleUrls: ['./add-collection.component.css']
+  styleUrls: ['./add-collection.component.css',
+ ]
 })
 export class AddCollectionComponent implements OnInit {
 
@@ -22,15 +24,20 @@ export class AddCollectionComponent implements OnInit {
   titleInput: HTMLElement;
   collectionTextarea: HTMLElement;
   previewHeader: HTMLElement;
+  auth: boolean;
 
   constructor(
     private artCollectionService: ArtCollectionService,
     private imgControlles: ImageControllesService,
     private globalService: GlobalServiceService,
+    private authService: AuthService
     ) {
    }
 
   ngOnInit() {
+    this.authService.getTokenStatus().subscribe(res => {
+      this.auth = res;     
+    }); 
     //Hide footer
     // document.getElementById('footer').style.display = 'none';
 

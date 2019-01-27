@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
+    "start": "ng serve && node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start:server": "nodemon server.js",
-    "dev": "concurrently \"npm run start:server\" \"npm run start\""
+    "dev": "concurrently \"npm run start:server\" \"npm run start\"",
+    "postinstall":"ng build --prod"
   },
   "private": true,
   "dependencies": {

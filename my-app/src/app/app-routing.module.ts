@@ -7,15 +7,12 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { AddCollectionComponent } from './components/add-collection/add-collection.component';
 import { EditCollectionComponent } from './components/edit-collection/edit-collection.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { BioComponent } from './components/Bio/Bio.component';
-import { InfoComponent } from './components/info/info.component';
+
 
 
 
 const routes: Routes = [
     {path: '', component: GallaryComponent},
-    {path: 'bio', component: BioComponent},
-    {path: 'info', component: InfoComponent},
     {path: 'admin', component: AdminPanelComponent},
     {path: 'add-collection', component: AddCollectionComponent},
     {path: 'edit-collection', component: EditCollectionComponent},
