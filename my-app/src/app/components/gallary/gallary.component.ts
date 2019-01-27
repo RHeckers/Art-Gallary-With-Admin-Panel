@@ -9,13 +9,15 @@ import { ArtCollectionService } from './../../services/art-collection.service';
 
 
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @Component({
   selector: 'app-gallary',
+  providers: [ScrollingModule],
   templateUrl: './gallary.component.html',
-  styleUrls: ['./gallary.component.css']
+  styleUrls: ['./gallary.component.css'
+  ]
 })
 export class GallaryComponent implements OnInit {
 
@@ -34,6 +36,10 @@ export class GallaryComponent implements OnInit {
 
   swiperConfig: SwiperConfigInterface = {
     observer: true,
+    autoplay: {
+      delay: 2000,
+    },
+    spaceBetween: 10,
     pagination: {
       el: '.swiper-pagination',
       dynamicBullets: false,
@@ -41,7 +47,7 @@ export class GallaryComponent implements OnInit {
     preloadImages: false,
     lazy: {
       loadPrevNext: true,
-      loadPrevNextAmount: 1,
+      loadPrevNextAmount: 3,
       loadOnTransitionStart: true,
       elementClass: 'swiper-lazy',
       loadingClass: 'swiper-lazy-loading',
@@ -49,14 +55,20 @@ export class GallaryComponent implements OnInit {
       preloaderClass: 'swiper-lazy-preloader',
     }
   }
+  collectionCount: number;
+  loading: boolean;
 
   constructor(private artCollectionService: ArtCollectionService) {
   }
 
   ngOnInit() {
+    this.loading = true;
     // Get the art collections
     this.getArtCollections();
     this.view = 0;
+    this.loading = false;
+
+
     
 
   }
@@ -88,7 +100,7 @@ export class GallaryComponent implements OnInit {
 
   //Function to activate the first or a new collection in the gallery 
   activateCollection(index?) {
-
+      this.collectionCount = this.collectionTitles.length; 
       //Make the clicked title red and the rest black
       for(let i = 0; i < this.collectionTitles.length; i++){
         const title = this.collectionTitles[i] as HTMLElement;

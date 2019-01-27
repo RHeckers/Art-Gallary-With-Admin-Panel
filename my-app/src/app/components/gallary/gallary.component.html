@@ -1,31 +1,33 @@
-<div class="container">
+<div *ngIf="!loading" class="container">
     <div class="row">
         <div class ="col-sm-4">      
           <div class="collectionsContainer">
             <h2 class="collectionsTitle"></h2>
             <div 
-              #collectionTitles
-              *ngFor="let collection of artCollections; let i = index" 
-              class="collections" 
-              id="collection_{{i}}">
+            #collectionTitles
+            *ngFor="let collection of artCollections; let i = index" 
+            class="collections" 
+            id="collection_{{i}}">
                 <a class="collection"  id='collectionTitle_{{i}}' (click)="activateCollection(i)">{{collection.title}}</a>  
             </div>
-            </div>    
-          </div>
-    <div class= "col-sm-8"> 
-
+            <div  ><a class="collection"  (click)="activateCollection(this.collectionTitles.length - 2)" >Biografie</a></div>
+            <div ><a  class="collection"  (click)="activateCollection(this.collectionTitles.length -1)" >Info</a></div>        
+        </div>    
+    </div>
+    <div class= "col-sm-8 mt-2"> 
      <div *ngFor="let collection of artCollections; let i = index" >
-            <div *ngIf="view === i; empty">
-     
+        <div *ngIf="view === i; empty">       
             <swiper [config]="swiperConfig" >
                 <div class="swiper-slide" *ngFor="let photo of collection.artCollection">
                     <img [attr.data-src]="photo" class="swiper-lazy">
-                <div class="swiper-lazy-preloader"></div>
-
+                    <div class="swiper-lazy-preloader"></div>
                 </div>                            
             </swiper>
+            <p>{{collection.description}}</p> 
         </div>
-         </div> 
+    </div> <div  *ngIf="view === collectionCount -2">         <app-bio></app-bio>    </div>
+  
+         <app-info  *ngIf="view === collectionCount -1"></app-info>
          <ng-template #empty>
 
          </ng-template>  

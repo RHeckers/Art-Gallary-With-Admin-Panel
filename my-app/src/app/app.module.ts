@@ -25,8 +25,11 @@ import { AuthInterceptorService } from './services/auth-interceptor';
 // Swiper config
 import { GalleryModule } from './components/gallary/gallary.module';
 
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 
 @NgModule({
+
   declarations: [
     AppComponent,
     NavbarComponent,
@@ -35,7 +38,8 @@ import { GalleryModule } from './components/gallary/gallary.module';
     AddCollectionComponent,
     EditCollectionComponent,
     NotFoundComponent,
-    RegisterLoginComponent
+    RegisterLoginComponent,
+    
   ],
   imports: [
     AppRoutingModule,
@@ -44,9 +48,13 @@ import { GalleryModule } from './components/gallary/gallary.module';
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,
-    GalleryModule
+    GalleryModule,
+    ScrollingModule
+    
 
   ],
+
+  
   providers: [ArtCollectionService,
        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
        ],

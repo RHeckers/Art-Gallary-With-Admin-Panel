@@ -1,22 +1,11 @@
-<!-- <div class="loginForm" id="loginForm">
-  <ng-template #guest>
-      <h3 class="loginFormText">Login Form</h3>
-      
-      <input class="loginInput" type="text" #email placeholder="Enter your email">
-      <input class="loginInput" type="password" #password placeholder="Enter your password">
-
-      <button class="loginBtn" (click)="login(email, password)">LOGIN</button>
-  </ng-template> 
-</div> -->
-
+<app-gallary  *ngIf="auth"></app-gallary>
 <div class="container">
 
   <app-register-login (logedIn)="logedIn($event)" *ngIf="!auth ;else guest"></app-register-login>
-
   <ng-template #guest>
       <div class="btnHolder" id="btnHolder">
-          <button routerLink="/edit-collection" class="editBtn btn">COLLECTIE AANPASSEN</button>
-          <button routerLink="/add-collection" class="addBtn btn">NIEUWE COLLECTIE</button>
+          <button routerLink="/edit-collection" class="editBtn btn">COLLECTIES<br>AANPASSEN</button>
+          <button routerLink="/add-collection" class="addBtn btn">COLLECTIE<br>TOEVOEGEN</button>
       </div>  
   </ng-template> 
   
